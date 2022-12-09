@@ -18,7 +18,11 @@ this is for debugging without having [home assistant](https://www.home-assistant
 ```podman run --rm --net=host -v "${PWD}":/config -it docker.io/esphome/esphome:${esp_version}```
 
 # configurations
-a configuration specifies a type of sensor.
+A configuration specifies a type of sensor.
+
+A `secrets.yaml` file is needed in order to be able to compile the configs to a uploadable file.
+See `secrets.yaml.example` as an example file.
+
 ## enviromnemt-mm.yaml
 Environment sensors sense Humidity and Temperature.
 Specify the location of the sensor via `-s location $value` where value is the location.
