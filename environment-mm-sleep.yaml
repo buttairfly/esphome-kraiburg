@@ -1,0 +1,48 @@
+substitutions:
+  name: environment-mm-sleep
+  id: environment_mm_sleep
+  name_verbose: Environment MM Sleeping Room
+
+esphome:
+  name: $name
+  platformio_options:
+    board_build.flash_mode: dio
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: ESP32C3
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_BT_BLE_50_FEATURES_SUPPORTED: y
+      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: y
+      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10"
+
+# Enable logging
+logger:
+
+mqtt:
+  broker: 192.168.178.69
+  port: 1883
+  client_id: $name
+  username: !secret mqtt_user
+  password: !secret mqtt_pw
+
+binary_sensor:
+  - name: ${name_verbose} GPIO
+    id: ${id}_gpio
+    platform: gpio
+    pin: 21
+
+ota:
+  password: !secret ota_pw
+
+wifi:
+  ssid: !secret wifi_home_ssid
+  password: !secret wifi_home_pw
+  ap: # Enable fallback hotspot (captive portal) in case wifi connection fails
+    ssid: $name
+    password: !secret wifi_fallback_pw
+
+preferences:
+  flash_write_interval: 10min
