@@ -1,7 +1,7 @@
 substitutions:
-  name: environment-mm-sleep
-  id: environment_mm_sleep
-  name_verbose: Environment MM Sleep
+  name: environment-mm-office
+  id: environment_mm_office
+  name_verbose: Environment MM Office
 
   ota_pw: !secret ota_pw
   wifi_home_ssid: !secret wifi_home_ssid
