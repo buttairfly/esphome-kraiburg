@@ -4,3 +4,6 @@ wifi:
   ap: # Enable fallback hotspot (captive portal) in case wifi connection fails
     ssid: ${name}.fallback
     password: ${wifi_fallback_pw}
+
+ota:
+  password: ${ota_pw}

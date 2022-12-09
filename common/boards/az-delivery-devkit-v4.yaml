@@ -8,9 +8,6 @@ esp32:
 
 logger:
 
-ota:
-  password: ${ota_pw}
-
 captive_portal:
 
 preferences:

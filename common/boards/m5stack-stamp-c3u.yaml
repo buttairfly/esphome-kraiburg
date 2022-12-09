@@ -15,8 +15,5 @@ esp32:
 logger:
   hardware_uart: USB_SERIAL_JTAG
 
-ota:
-  password: ${ota_pw}
-
 preferences:
   flash_write_interval: 10min
