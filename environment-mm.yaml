@@ -1,7 +1,7 @@
 substitutions:
-  name: environment-mm-sleep
-  id: environment_mm_sleep
-  name_verbose: Environment MM Sleep
+  name: environment-mm-${location}
+  id: environment_mm_${location}
+  name_verbose: ElaMax ${location}
 
   ota_pw: !secret ota_pw
   wifi_home_ssid: !secret wifi_home_ssid
