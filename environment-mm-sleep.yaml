@@ -7,19 +7,19 @@ esphome:
   name: $name
   platformio_options:
     board_build.flash_mode: dio
+    platform_packages:
+     - toolchain-riscv32-esp @ 8.4.0+2021r1
+     - toolchain-xtensa-esp32s2 @ 8.4.0+2021r1
 
 esp32:
   board: esp32-c3-devkitm-1
-  variant: ESP32C3
+  variant: esp32c3
   framework:
     type: esp-idf
-    sdkconfig_options:
-      CONFIG_BT_BLE_50_FEATURES_SUPPORTED: y
-      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: y
-      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10"
 
 # Enable logging
 logger:
+  hardware_uart: USB_SERIAL_JTAG
 
 mqtt:
   broker: 192.168.178.69
@@ -28,11 +28,17 @@ mqtt:
   username: !secret mqtt_user
   password: !secret mqtt_pw
 
-binary_sensor:
-  - name: ${name_verbose} GPIO
-    id: ${id}_gpio
-    platform: gpio
-    pin: 21
+sensor:
+  - platform: dht
+    model: DHT22
+    pin: G3
+    temperature:
+      name: "$name_verbose Temperature"
+      accuracy_decimals: 1
+    humidity:
+      name: "$name_verbose Humidity"
+      accuracy_decimals: 1
+    update_interval: 60s
 
 ota:
   password: !secret ota_pw
