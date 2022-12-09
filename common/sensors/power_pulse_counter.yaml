@@ -1,0 +1,20 @@
+name: ${name_verbose} Power
+id: ${id}_pulse_counter_power
+platform: pulse_counter
+pin: 35
+unit_of_measurement: kW
+use_pcnt: false
+internal_filter: 50ms
+count_mode:
+  rising_edge: DISABLE
+  falling_edge: INCREMENT
+accuracy_decimals: 2
+filters:
+  - multiply: 0.6  # (60s/100 pulses per kWh)
+total:
+  name: ${name_verbose} Energy
+  id: ${id}_pulse_counter_energy
+  unit_of_measurement: kWh
+  accuracy_decimals: 2
+  filters:
+    - multiply: 0.01  # (1/100 pulses per kWh)

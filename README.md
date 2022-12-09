@@ -26,16 +26,18 @@ Currently `sleep` and `office` are supported.
 
 # board FYI:
 ## m5stamp c3u
-Q: How to setup board UART device:
+Q: How to setup board UART device?
+
 A: Initially press button G9 while connecting to pc power to enable uart (RGB led should not be lit)
 
-Q: How to enable device:
+Q: How to enable device?
+
 A: Set the following rule via file `/etc/udev/rules.d/m5stamp-c3u.rules` with content `KERNEL=="ttyACM[0-9]*", MODE="0666"`
 
 Q: pinout
-![m5stack-stamp-c3u](./common/boards/pinout_m5stack_stamp_c3u.jpg)
+![m5stack-stamp-c3u](./common/boards/pinout_m5stack-stamp-c3u.jpg)
 
 ## az-delivery esp32 v4
 
 Q: pinout
-![az-delivery esp32 v4](./common/boards/az-delivery-esp32-v4_pinout.png)
+![az-delivery esp32 v4](./common/boards/pinout_az-delivery-esp32-v4.png)

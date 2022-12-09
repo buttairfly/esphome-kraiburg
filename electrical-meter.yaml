@@ -1,0 +1,47 @@
+substitutions:
+  name: electrical-meter
+  id: electrical_meter
+  name_verbose: Electrical Meter
+
+  ota_pw: !secret ota_pw
+  wifi_home_ssid: !secret wifi_home_ssid
+  wifi_home_pw: !secret wifi_home_pw
+  wifi_fallback_pw: !secret wifi_fallback_pw
+  mqtt_broker: !secret mqtt_broker
+  mqtt_port: !secret mqtt_port
+  mqtt_user: !secret mqtt_user
+  mqtt_pw: !secret mqtt_pw
+
+# api:
+#   services:
+#     - service: set_${id}_pulse_total
+#       variables:
+#         new_pulse_total: int
+#       then:
+#         - pulse_counter.set_total_pulses:
+#             id: ${id}_pulse_counter_power
+#             value: !lambda 'return new_pulse_total;'
+
+packages:
+  board: !include common/boards/az-delivery-devkit-v4.yaml
+  wifi: !include common/wifi.yaml
+  mqtt: !include common/mqtt.yaml
+  web_server: !include common/web_server.yaml
+
+sensor:
+  - <<: !include common/sensors/power_pulse_counter.yaml
+  # - name: ${name_verbose} ADC
+  #   id: ${id}_adc
+  #   platform: adc
+  #   pin: 32
+  #   update_interval: 100ms
+  #   raw: true
+  #   unit_of_measurement: ""
+  #   filters:
+  #     - multiply: 0.00024420024 # 1/(2^12-1)
+
+# binary_sensor:
+#   - name: ${name_verbose} GPIO
+#     id: ${id}_gpio
+#     platform: gpio
+#     pin: 35

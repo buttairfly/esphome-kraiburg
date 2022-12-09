@@ -1,0 +1,17 @@
+esphome:
+  name: $name
+
+esp32:
+  board: az-delivery-devkit-v4
+  framework:
+    type: arduino
+
+logger:
+
+ota:
+  password: ${ota_pw}
+
+captive_portal:
+
+preferences:
+  flash_write_interval: 10min
