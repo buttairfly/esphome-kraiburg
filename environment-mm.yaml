@@ -1,7 +1,8 @@
 substitutions:
+  location: sleep # sleep|office
   name: environment-mm-${location}
   id: environment_mm_${location}
-  name_verbose: ElaMax ${location}
+  name_verbose: Environment ElaMax ${location}
 
   ota_pw: !secret ota_pw
   wifi_home_ssid: !secret wifi_home_ssid
