@@ -4,8 +4,8 @@ substitutions:
   name: environment-mm-${location}
   id: environment_mm_${location}
   name_verbose: Environment ElaMax ${location_verbose}
-  i2c_bus_a_sda: 4
-  i2c_bus_a_scl: 3
+  i2c_bus_a_sda: '4'
+  i2c_bus_a_scl: '3'
 
   ota_pw: !secret ota_pw
   wifi_home_ssid: !secret wifi_home_ssid
