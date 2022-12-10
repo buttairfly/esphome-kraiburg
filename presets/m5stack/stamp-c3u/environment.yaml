@@ -1,0 +1,23 @@
+substitutions:
+  name: environment-${type}-${location}
+  id: environment_${type}_${location}
+  name_verbose: Environment ${type_verbose} ${location_verbose}
+  log_level: DEBUG
+
+packages:
+  board: !include /config/common/boards/m5stack-stamp-c3u-boot-led.yaml
+  wifi: !include /config/common/wifi.yaml
+  mqtt: !include /config/common/mqtt.yaml
+  i2c: !include /config/common/i2c_a.yaml
+
+sensor:
+  - <<: !include /config/common/sensors/bme280.yaml # connected via i2c_a
+
+script:
+  - <<: !include /config/common/scripts/m5stack-stamp-c3u-bme280-available-test.yaml
+
+esphome:
+  on_boot:
+    - priority: -100
+      then:
+        script.execute: m5stack_stamp_c3u_bme280_available_test

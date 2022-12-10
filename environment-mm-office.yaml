@@ -1,7 +1,10 @@
 substitutions:
-  name: electrical-meter
-  id: electrical_meter
-  name_verbose: Electrical Meter
+  location: office
+  location_verbose: Office
+  type: mm
+  type_verbose: ElaMax
+  i2c_bus_a_sda: '7'
+  i2c_bus_a_scl: '8'
   # secrets
   ota_pw: !secret ota_pw
   wifi_home_ssid: !secret wifi_home_ssid
@@ -13,4 +16,4 @@ substitutions:
   mqtt_pw: !secret mqtt_pw
 
 packages:
-  electrical-meter: !include /config/presets/az-delivery/esp32-devkit-v4/electrical-meter.yaml
+  environment: !include /config/presets/m5stack/stamp-c3u/environment.yaml

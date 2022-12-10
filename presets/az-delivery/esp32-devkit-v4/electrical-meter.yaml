@@ -1,0 +1,36 @@
+substitutions:
+  log_level: DEBUG
+
+# api:
+#   services:
+#     - service: set_${id}_pulse_total
+#       variables:
+#         new_pulse_total: int
+#       then:
+#         - pulse_counter.set_total_pulses:
+#             id: ${id}_pulse_counter_power
+#             value: !lambda 'return new_pulse_total;'
+
+packages:
+  board: !include /config/common/boards/az-delivery-devkit-v4.yaml
+  wifi: !include /config/common/wifi.yaml
+  mqtt: !include /config/common/mqtt.yaml
+  web_server: !include /config/common/web_server.yaml
+
+sensor:
+  - <<: !include /config/common/sensors/power_pulse_counter.yaml
+  # - name: ${name_verbose} ADC
+  #   id: ${id}_adc
+  #   platform: adc
+  #   pin: 32
+  #   update_interval: 100ms
+  #   raw: true
+  #   unit_of_measurement: ""
+  #   filters:
+  #     - multiply: 0.00024420024 # 1/(2^12-1)
+
+# binary_sensor:
+#   - name: ${name_verbose} GPIO
+#     id: ${id}_gpio
+#     platform: gpio
+#     pin: 35
