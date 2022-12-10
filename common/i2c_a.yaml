@@ -1,0 +1,4 @@
+i2c:
+  id: bus_a
+  sda: ${i2c_bus_a_sda}
+  scl: ${i2c_bus_a_scl}

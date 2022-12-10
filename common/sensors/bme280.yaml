@@ -1,0 +1,17 @@
+platform: bme280
+temperature:
+  name: $name_verbose Temperature
+  id: ${id}_temperature
+  oversampling: 16x
+  accuracy_decimals: 1
+pressure:
+  name: ${name_verbose} Pressure
+  id: ${id}_pressure
+  accuracy_decimals: 1
+humidity:
+  name: ${name_verbose} Humidity
+  id: ${id}_humidity
+  accuracy_decimals: 1
+i2c_id: bus_a
+address: 0x76
+update_interval: 60s
