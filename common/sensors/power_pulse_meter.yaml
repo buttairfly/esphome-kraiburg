@@ -1,13 +1,10 @@
 name: ${name_verbose} Power
-id: ${id}_pulse_counter_power
-platform: pulse_counter
+id: ${id}_pulse_meter_power
+platform: pulse_meter
 pin: ${binary_counter_pin}
 unit_of_measurement: kW
-use_pcnt: false
+internal_filter_mode: PULSE
 internal_filter: 200ms
-count_mode:
-  rising_edge: DISABLE
-  falling_edge: INCREMENT
 accuracy_decimals: 2
 filters:
   - multiply: 0.6  # (60s/100 pulses per kWh)
@@ -17,7 +14,7 @@ on_value:
         id: ${id}_control_led # needs control led
 total:
   name: ${name_verbose} Energy
-  id: ${id}_pulse_counter_energy
+  id: ${id}_pulse_meter_energy
   unit_of_measurement: kWh
   accuracy_decimals: 2
   filters:
