@@ -13,4 +13,4 @@ substitutions:
   mqtt_pw: !secret mqtt_pw
 
 packages:
-  electrical-meter: !include /config/presets/az-delivery/esp32-devkit-v4/electrical-meter.yaml
+  electrical-meter: !include /config/presets/az-delivery/esp32-devkitc-v4/electrical-meter.yaml

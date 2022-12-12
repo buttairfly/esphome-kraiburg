@@ -12,7 +12,7 @@ substitutions:
 #             value: !lambda 'return new_pulse_total;'
 
 packages:
-  board: !include /config/common/boards/az-delivery-devkit-v4.yaml
+  board: !include /config/common/boards/az-delivery-devkitc-v4.yaml
   wifi: !include /config/common/wifi.yaml
   mqtt: !include /config/common/mqtt.yaml
   web_server: !include /config/common/web_server.yaml

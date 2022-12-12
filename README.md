@@ -41,7 +41,7 @@ A: Set the following rule via file `/etc/udev/rules.d/m5stamp-c3u.rules` with co
 Q: pinout
 ![m5stack-stamp-c3u](./common/boards/pinout_m5stack-stamp-c3u.jpg)
 
-## az-delivery esp32 v4
+## az-delivery esp32-devkitc-v4
 
 Q: pinout
-![az-delivery esp32 v4](./common/boards/pinout_az-delivery-esp32-v4.png)
+![az-delivery esp32-devkitc-v4](./common/boards/pinout_az-delivery-esp32-devkitc-v4.png)
