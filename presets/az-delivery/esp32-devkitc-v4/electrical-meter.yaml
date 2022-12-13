@@ -27,12 +27,12 @@ packages:
 sensor:
   # - <<: !include /config/common/sensors/power_pulse_counter.yaml
   - <<: !include /config/common/sensors/power_pulse_meter.yaml
-  # - name: ${name_verbose} ADC
-  #   id: ${id}_adc
-  #   platform: adc
-  #   pin: ${analog_counter_pin}
-  #   update_interval: 100ms
-  #   raw: true
-  #   unit_of_measurement: ""
-  #   filters:
-  #     - multiply: 0.00024420024 # 1/(2^12-1)
+  - name: ${name_verbose} ADC
+    id: ${id}_adc
+    platform: adc
+    pin: ${analog_counter_pin}
+    update_interval: 100ms
+    raw: true
+    unit_of_measurement: ""
+    filters:
+      - multiply: 0.00024420024 # 1/(2^12-1)

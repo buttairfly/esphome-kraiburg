@@ -4,7 +4,7 @@ platform: pulse_meter
 pin: ${binary_counter_pin}
 unit_of_measurement: kW
 internal_filter_mode: PULSE
-internal_filter: 200ms
+internal_filter: 500ms
 accuracy_decimals: 2
 filters:
   - multiply: 0.6  # (60s/100 pulses per kWh)
