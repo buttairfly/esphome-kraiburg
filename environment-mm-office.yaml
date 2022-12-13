@@ -3,8 +3,6 @@ substitutions:
   location_verbose: Office
   type: mm
   type_verbose: ElaMax
-  i2c_bus_a_sda: '7'
-  i2c_bus_a_scl: '8'
   # secrets
   ota_pw: !secret ota_pw
   wifi_home_ssid: !secret wifi_home_ssid

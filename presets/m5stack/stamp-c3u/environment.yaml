@@ -4,8 +4,8 @@ substitutions:
   name_verbose: Environment ${type_verbose} ${location_verbose}
   # preset defaults
   log_level: DEBUG
-  i2c_bus_a_sda: '5'
-  i2c_bus_a_scl: '6'
+  i2c_bus_a_sda: GPIO5
+  i2c_bus_a_scl: GPIO6
 
 packages:
   board: !include /config/common/boards/m5stack-stamp-c3u-boot-led.yaml
