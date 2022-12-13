@@ -3,16 +3,23 @@ on_boot:
   - priority: 600
     then:
       - <<: !include /config/common/actions/m5stack/stamp-c3u/led/blue.yaml
+        transition_length: 500ms
+        brightness: 10%
       - delay: 500ms
       - logger.log: "Boot - LED red"
-      - <<: !include /config/common/actions/m5stack/stamp-c3u/led/red.yaml
+      - <<: !include /config/common/actions/m5stack/stamp-c3u/led/blue.yaml
+        transition_length: 500ms
+        brightness: 100%
   - priority: 240
     then:
       - logger.log: "Boot - LED yellow"
-      - <<: !include /config/common/actions/m5stack/stamp-c3u/led/yellow.yaml
+      - <<: !include /config/common/actions/m5stack/stamp-c3u/led/cyan.yaml
+        transition_length: 500ms
       - wait_until:
           mqtt.connected:
       - logger.log: "Boot - LED green"
       - <<: !include /config/common/actions/m5stack/stamp-c3u/led/green.yaml
+        transition_length: 500ms
       - delay: 500ms
       - <<: !include /config/common/actions/m5stack/stamp-c3u/led/_off.yaml
+        transition_length: 500ms
