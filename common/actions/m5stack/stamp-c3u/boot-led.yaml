@@ -11,7 +11,8 @@ on_boot:
       - logger.log: "Boot - LED yellow"
       - <<: !include /config/common/actions/m5stack/stamp-c3u/led/cyan.yaml
       - wait_until:
-          mqtt.connected:
+          # mqtt.connected:
+          api.connected:
       - logger.log: "Boot - LED green"
       - <<: !include /config/common/actions/m5stack/stamp-c3u/led/green.yaml
       - delay: 500ms

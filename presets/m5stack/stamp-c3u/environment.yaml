@@ -7,10 +7,11 @@ substitutions:
   i2c_bus_a_sda: GPIO5
   i2c_bus_a_scl: GPIO6
 
+api:
+
 packages:
   board: !include /config/common/boards/m5stack-stamp-c3u-boot-led.yaml
   wifi: !include /config/common/wifi.yaml
-  mqtt: !include /config/common/mqtt.yaml
   i2c: !include /config/common/i2c_a.yaml
 
 sensor:

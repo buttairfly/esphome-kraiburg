@@ -8,10 +8,6 @@ substitutions:
   wifi_home_ssid: !secret wifi_home_ssid
   wifi_home_pw: !secret wifi_home_pw
   wifi_fallback_pw: !secret wifi_fallback_pw
-  mqtt_broker: !secret mqtt_broker
-  mqtt_port: !secret mqtt_port
-  mqtt_user: !secret mqtt_user
-  mqtt_pw: !secret mqtt_pw
 
 packages:
   environment: !include /config/presets/m5stack/stamp-c3u/environment.yaml

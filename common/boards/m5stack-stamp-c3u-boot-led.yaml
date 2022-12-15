@@ -1,5 +1,3 @@
-# arduino works currently only with docker.io/esphome/esphome:dev build
-# it should be available in docker.io/esphome/esphome:2022.12
 esphome:
   name: ${name}
   min_version: '2022.12'
