@@ -26,13 +26,23 @@ packages:
 
 sensor:
   # - <<: !include /config/common/sensors/power_pulse_counter.yaml
-  - <<: !include /config/common/sensors/power_pulse_meter.yaml
+  # - <<: !include /config/common/sensors/power_pulse_meter.yaml
   - name: ${name_verbose} ADC
     id: ${id}_adc
     platform: adc
     pin: ${analog_counter_pin}
-    update_interval: 100ms
+    update_interval: 50ms
     raw: true
+    disabled_by_default: true
     unit_of_measurement: ""
     filters:
       - multiply: 0.00024420024 # 1/(2^12-1)
+
+binary_sensor:
+  - platform: analog_threshold
+    name: ${name_verbose} ADC
+    id: ${id}_adc_binary
+    sensor_id: ${id}_adc
+    threshold:
+      upper: 0.9
+      lower: 0.7
