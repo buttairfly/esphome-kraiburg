@@ -1,0 +1,8 @@
+substitutions:
+  # needed substitutions:
+  # version: # pass in with "-s version $(git describe --tags --always --dirty)"
+
+esphome:
+  project:
+    name: buttairfly.kraiburg
+    version: ${version}

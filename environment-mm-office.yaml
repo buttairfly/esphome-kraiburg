@@ -13,6 +13,7 @@ substitutions:
 
 packages:
   board: !include ./boards/m5stack-stamp-c3u.yaml
+  git-version: !include ./modules/git-version_any_none.yaml
   wifi: !include ./modules/wifi_any_none.yaml
   common-defaults: !include ./modules/common-defaults_any_none.yaml
   diagnostic-sensors: !include ./modules/diagnostic-sensors_any_none.yaml
