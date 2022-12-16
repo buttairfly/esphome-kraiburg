@@ -30,4 +30,16 @@ for c in "${COMMANDS[@]}"; do
     fi
 done
 
-podman run --rm -v "${SCRIPT_DIR}":/config -it docker.io/esphome/esphome:"${ESPHOME_TAG}" "${ARGS[@]}"
+CONTAINER_PROGRAM=""
+if ! command -v podman &> /dev/null ; then
+    if ! command -v docker &> /dev/null ; then
+        echo -e "Container ${RED}podman or docker${NONE} could not be found!"
+        exit 2
+    else
+        CONTAINER_PROGRAM="docker"
+    fi
+else
+    CONTAINER_PROGRAM="podman"
+fi
+
+"${CONTAINER_PROGRAM}" run --rm -v "${SCRIPT_DIR}":/config -it docker.io/esphome/esphome:"${ESPHOME_TAG}" "${ARGS[@]}"
