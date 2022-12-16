@@ -1,24 +1,33 @@
 #!/bin/bash
 
-
 SCRIPT_DIR="$(dirname -- $(readlink -fn -- "$0"))"
+ARGS=$@
 source "${SCRIPT_DIR}/.env"
 
-COMMAND="$1" # run|config|logs|...
-YAML_FILE="$2"
+NONE='\e[0m'
+RED='\e[31m'
+GREEN='\e[32m'
+YELLOW='\e[33m'
+BLUE='\e[34m'
 
-if output=$(git status --porcelain) && [ -n "$output" ]; then
-    # Uncommitted changes
-    echo "You have uncommited changes:"
-    git status
-    read -p "Do you want to proceed? (yN) " yn
-    case $yn in 
-        y ) echo "ok, we will proceed";;
-        * ) echo "Aborted";
-            exit 1;;
-    esac
-fi
+COMMANDS=('run' 'upload' 'rename')
+for c in "${COMMANDS[@]}"; do
+	if printf '%s\0' "$ARGS" | grep -Fxqz -- "$c"; then
+        # check git status when calling one of $COMMANDS
+        if GIT_STATUS=$(git status --porcelain) && [ -n "$GIT_STATUS" ]; then
+            echo -e "You have ${YELLOW}uncommited changes${NONE}:"
+            git status --short
+            read -p $'Do you want to \e[34mproceed\e[0m? (\e[33myN\e[0m): ' YN
+            case $YN in 
+                y ) echo -e "${GREEN}Proceeding${NONE}...\n";;
+                * ) echo -e "${RED}Aborted${NONE}";
+                    exit 1;;
+            esac
+        fi
+        # append version to config
+        ARGS=( "-s" "version" "${GIT_VERSION}" ${ARGS[@]} )
+        break
+    fi
+done
 
-
-podman run --rm -v "${SCRIPT_DIR}":/config -it docker.io/esphome/esphome:"${ESPHOME_TAG}" \
-    -s version "${GIT_VERSION}" "$@" "${COMMAND}" "${YAML_FILE}"
+podman run --rm -v "${SCRIPT_DIR}":/config -it docker.io/esphome/esphome:"${ESPHOME_TAG}" "${ARGS[@]}"
