@@ -7,5 +7,18 @@ source "${SCRIPT_DIR}/.env"
 COMMAND="$1" # run|config|logs|...
 YAML_FILE="$2"
 
+if output=$(git status --porcelain) && [ -n "$output" ]; then
+    # Uncommitted changes
+    echo "You have uncommited changes:"
+    git status
+    read -p "Do you want to proceed? (yN) " yn
+    case $yn in 
+        y ) echo "ok, we will proceed";;
+        * ) echo "Aborted";
+            exit 1;;
+    esac
+fi
+
+
 podman run --rm -v "${SCRIPT_DIR}":/config -it docker.io/esphome/esphome:"${ESPHOME_TAG}" \
     -s version "${GIT_VERSION}" "$@" "${COMMAND}" "${YAML_FILE}"
