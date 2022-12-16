@@ -9,13 +9,12 @@ api:
   services:
     - service: set_${id}_pulse_total
       variables:
-        new_pulse_total: int
+        new_total: float
       then:
-        - # pulse_counter.set_total_pulses:
-          pulse_meter.set_total_pulses:
-            # id: ${id}_pulse_counter_power
-            id: ${id}_pulse_meter_power
-            value: !lambda 'return new_pulse_total;'
+        - globals.set:
+            id: ${id}_energy
+            value: !lambda 'return new_total;'
+        - component.update: ${id}_pulse_meter_energy
 
 packages:
   board: !include /config/common/boards/az-delivery-devkitc-v4.yaml
@@ -24,25 +23,64 @@ packages:
 
 <<: !include /config/common/lights/control-led.yaml
 
-sensor:
-#   - <<: !include /config/common/sensors/power_pulse_counter.yaml
-  - <<: !include /config/common/sensors/power_pulse_meter.yaml
-#   - name: ${name_verbose} ADC
-#     id: ${id}_adc
-#     platform: adc
-#     pin: ${analog_counter_pin}
-#     update_interval: 50ms
-#     raw: true
-#     disabled_by_default: true
-#     unit_of_measurement: ""
-#     filters:
-#       - multiply: 0.00024420024 # 1/(2^12-1)
+# esphome:
+#   on_boot:
+#     - priority: 240
+#       then:
+#         - wait_until:
+#             api.connected:
+#         - delay: 500ms
+#         - globals.set:
+#             id: ${id}_energy
+#             value: !lambda 'return id(${id}_homeassistant_energy).state;'
+#         - component.update: ${id}_pulse_meter_energy
 
-# binary_sensor:
-#   - platform: analog_threshold
-#     name: ${name_verbose} Binary
-#     id: ${id}_adc_binary
-#     sensor_id: ${id}_adc
-#     threshold:
-#       upper: 0.9
-#       lower: 0.7
+logger:
+  logs:
+    sensor.${id}_adc: ERROR
+
+globals:
+  - # this stores the energy in kWh as float with 2 decimals accuracy
+    id: ${id}_energy
+    type: float
+    restore_value: no
+    initial_value: '9000.01'
+
+sensor:
+  - id: ${id}_adc
+    platform: adc
+    pin: ${analog_counter_pin}
+    update_interval: 50ms
+    raw: true
+    internal: true
+    unit_of_measurement: ""
+    filters:
+      - multiply: 0.00024420024 # 1/(2^12-1)
+  - name: ${name_verbose} Energy
+    id: ${id}_pulse_meter_energy
+    platform: template
+    unit_of_measurement: kWh
+    accuracy_decimals: 2
+    lambda: 'return id(${id}_energy);'
+    update_interval: 60s
+  # - platform: homeassistant
+  #   entity_id: sensor.${id}_energy
+  #   id: ${id}_homeassistant_energy
+
+binary_sensor:
+  - platform: analog_threshold
+    name: ${name_verbose} Binary
+    id: ${id}_adc_binary
+    sensor_id: ${id}_adc
+    threshold:
+      upper: 0.9999
+      lower: 0.7
+    filters:
+      - delayed_on: 300ms
+    on_release:
+      - globals.set:
+          id: ${id}_energy
+          value: !lambda 'return id(${id}_energy) + 0.01;'
+      - light.toggle:
+          id: ${id}_control_led # needs control led
+      - component.update: ${id}_pulse_meter_energy

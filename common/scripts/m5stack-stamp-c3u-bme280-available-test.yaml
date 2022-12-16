@@ -25,7 +25,7 @@ then:
   - logger.log:
       format: '${id} bme280 available: %.1f°C %.1f%% %.1fhPa'
       level: INFO
-      args: [ 
+      args: [
         'id(${id}_temperature).state',
         'id(${id}_pressure).state',
         'id(${id}_humidity).state'
