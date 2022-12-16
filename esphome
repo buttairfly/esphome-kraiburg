@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+SCRIPT_DIR="$(dirname -- $(readlink -fn -- "$0"))"
+source "${SCRIPT_DIR}/.env"
+
+COMMAND="$1" # run|config|logs|...
+YAML_FILE="$2"
+
+podman run --rm -v "${SCRIPT_DIR}":/config -it docker.io/esphome/esphome:"${ESPHOME_TAG}" \
+    -s version "${GIT_VERSION}" "$@" "${COMMAND}" "${YAML_FILE}"

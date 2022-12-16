@@ -2,12 +2,12 @@
 
 ## esphome
 
-Note: the esphome version is in the form `YYYY.MM` e.g. 2022.11
+Note: the esphome version is in the form `YYYY.MM` e.g. 2022.11 and should be present in [.env](./.env)
 ### initialize new boad config
-```podman run --rm -v ${PWD}:/config -it docker.io/esphome/esphome:${esp_version} [-s KEY VALUE] wizard ${board-config}.yaml```
+```./esphome [-s KEY VALUE] wizard ${board-config}.yaml```
 
 ### upload via ota or /dev/
-```podman run --rm -v "${PWD}":/config [--device=${device}] -it docker.io/esphome/esphome:${esp_version} [-s KEY VALUE] run ${board-config}.yaml```
+```./esphome [--device=${device}] [-s KEY VALUE] run ${board-config}.yaml```
 
 specify device always, when the board is new, later you can omit the device flag to use wifi.
 It can be used, when you want to rename the wifi or use the rename functionality of esphome.
@@ -15,7 +15,7 @@ It can be used, when you want to rename the wifi or use the rename functionality
 ## esphome assistant
 this is for debugging without having [home assistant](https://www.home-assistant.io/)
 
-```podman run --rm --net=host -v "${PWD}":/config -it docker.io/esphome/esphome:${esp_version}```
+```source .env && podman run --rm --net=host -v "${PWD}":/config -it docker.io/esphome/esphome:${ESPHOME_TAG}```
 
 # configurations
 A configuration specifies a type of sensor.
