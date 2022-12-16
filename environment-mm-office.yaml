@@ -1,8 +1,10 @@
 substitutions:
-  location: office
-  location_verbose: Office
-  type: mm
-  type_verbose: ElaMax
+  name: environment-mm-office
+  id: environment_mmm_office
+  name_verbose: Environment ElaMax Office
+  # pins
+  i2c_sda: GPIO5
+  i2c_scl: GPIO6
   # secrets
   ota_pw: !secret ota_pw
   wifi_home_ssid: !secret wifi_home_ssid
@@ -10,4 +12,12 @@ substitutions:
   wifi_fallback_pw: !secret wifi_fallback_pw
 
 packages:
-  environment: !include /config/presets/m5stack/stamp-c3u/environment.yaml
+  board: !include ./boards/m5stack-stamp-c3u.yaml
+  wifi: !include ./modules/wifi_any_none.yaml
+  common-defaults: !include ./modules/common-defaults_any_none.yaml
+  diagnostic-sensors: !include ./modules/diagnostic-sensors_any_none.yaml
+  # specific
+  onboard-led: !include ./modules/onboard-led_m5stack-stamp-c3u_none.yaml
+  boot_led_script: !include ./modules/boot-led_m5stack-stamp-c3u_onboard-led.yaml
+  available_script_bme280: !include ./modules/available-script_m5stack-stamp-c3u_bme280_onboard-led.yaml
+  bme280: !include ./sensors/environment/bme280_any_none.yaml

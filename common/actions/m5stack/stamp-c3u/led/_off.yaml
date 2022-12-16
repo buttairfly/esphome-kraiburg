@@ -1,4 +1,0 @@
-# this needs common/lights/m5stack-stamp-c3u-onboard-led.yaml
-light.turn_off:
-  id: "${id}_onboard_led"
-  transition_length: 0.1s

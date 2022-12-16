@@ -1,0 +1,12 @@
+substitutions:
+  # needed substitutions:
+  # name:
+
+esphome:
+  name: ${name}
+  min_version: '2022.11'
+
+esp32:
+  board: az-delivery-devkit-v4
+  framework:
+    type: arduino

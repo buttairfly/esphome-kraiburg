@@ -1,0 +1,24 @@
+substitutions:
+  # needed substitutions:
+  # id:
+  # tick_unit_id:
+  # sensor_id:
+  # global_id:
+  # homeassistant_sensor_id_last:
+
+# esphome:
+#   on_boot:
+#     - priority: 200
+#       then:
+#         - wait_until:
+#             api.connected:
+#         - delay: 500ms
+#         - globals.set:
+#             id: ${global_id}
+#             value: !lambda 'return id(${homeassistant_sensor_id_last}).state;'
+#         - component.update: ${sensor_id}
+
+# sensor:
+#   - platform: homeassistant
+#     entity_id: sensor.${sensor_id}_last
+#     id: ${homeassistant_sensor_id_last}

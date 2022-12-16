@@ -2,6 +2,10 @@ substitutions:
   name: electrical-meter
   id: electrical_meter
   name_verbose: Electrical Meter
+  # pins
+  helper_binary_pin: GPIO35
+  helper_adc_pin: GPIO32
+  id_control_led_pin: GPIO21
   # secrets
   ota_pw: !secret ota_pw
   wifi_home_ssid: !secret wifi_home_ssid
@@ -9,4 +13,10 @@ substitutions:
   wifi_fallback_pw: !secret wifi_fallback_pw
 
 packages:
-  electrical-meter: !include /config/presets/az-delivery/esp32-devkitc-v4/electrical-meter.yaml
+  board: !include ./boards/az-delivery-devkitc-v4.yaml
+  wifi: !include ./modules/wifi_any_none.yaml
+  common-defaults: !include ./modules/common-defaults_any_none.yaml
+  diagnostic-sensors: !include ./modules/diagnostic-sensors_any_none.yaml
+  # specific
+  tick-analog-counter: !include ./sensors/integrator/tick-analog-counter_any_none.yaml
+  tick-analog-counter-boot-setter: !include ./sensors/integrator/tick-analog-counter-boot-setter_any_none.yaml

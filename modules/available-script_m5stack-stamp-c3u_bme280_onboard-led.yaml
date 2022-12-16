@@ -1,0 +1,57 @@
+substitutions:
+  onboard_led_id: ${id}_onboard_led
+  led_rgb_id: ${id}_onboard_led
+  # needed substitutions:
+  # id:
+
+# packages needed by available-script:
+#   onboard-led
+
+script:
+  - id: available_script_m5stack_stamp_c3u_bme280
+    then:
+      - logger.log: 
+          format: "Checking bme280 availability..."
+          level: INFO
+      - while:
+          condition:
+            and:
+              - lambda: 'return isnan(id(${id}_temperature).state);'
+              - lambda: 'return isnan(id(${id}_pressure).state);'
+              - lambda: 'return isnan(id(${id}_humidity).state);'
+          then:
+            - logger.log:
+                format: "${id} bme280 NOT available: %.1f°C %.1f%% %.1fhPa! - LED orange pulse'"
+                level: ERROR
+                args: [ 
+                  'id(${id}_temperature).state',
+                  'id(${id}_pressure).state',
+                  'id(${id}_humidity).state'
+                ]
+            - light.turn_on:
+                <<: !include ./snippets/color-presets_any_led-rgb/orange.yaml
+                brightness: 100%
+            - delay: 500ms
+            - light.turn_on:
+                <<: !include ./snippets/color-presets_any_led-rgb/orange.yaml
+                brightness: 50%
+            - delay: 500ms
+      - logger.log:
+          format: '${id} bme280 available: %.1f°C %.1f%% %.1fhPa'
+          level: INFO
+          args: [
+            'id(${id}_temperature).state',
+            'id(${id}_pressure).state',
+            'id(${id}_humidity).state'
+          ]
+      - light.turn_on:
+          <<: !include ./snippets/color-presets_any_led-rgb/green.yaml
+      - delay: 5s
+      - light.turn_off:
+          <<: !include ./snippets/color-presets_any_led-rgb/_off.yaml
+
+esphome:
+  on_boot:
+    - priority: -100
+      then:
+        - script.execute: available_script_m5stack_stamp_c3u_bme280

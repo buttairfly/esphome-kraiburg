@@ -1,0 +1,18 @@
+substitutions:
+  log_level: DEBUG
+  flash_write_interval: 10min
+
+logger:
+  level: ${log_level}
+
+api:
+  # encryption:
+  #   key: !secret api_encryption_key
+
+preferences:
+  flash_write_interval: ${flash_write_interval}
+
+web_server:
+  port: 80
+  ota: false
+

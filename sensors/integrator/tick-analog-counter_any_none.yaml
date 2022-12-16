@@ -1,0 +1,86 @@
+substitutions:
+  tick_unit_name: Energy
+  tick_unit_id: energy
+  tick_unit_si: kWh
+  tick_unit_increment: '0.01'
+  tick_unit_accuracy: '2'
+  sensor_id: ${id}_${tick_unit_id}_total
+  counter_id_timeout_interval: 60s
+  global_id: ${sensor_id}_value
+  helper_sensor: ${sensor_id}_raw
+  helper_adc_id: ${helper_sensor}_adc
+  helper_adc_polling_interval: 50ms
+  helper_adc_multiply: '0.00024420024' # 1/(2^12-1)
+  helper_binary_id: ${helper_sensor}_binary
+  helper_binary_filter_delayed_on: 300ms
+  helper_binary_threshold_upper: '0.9999'
+  helper_binary_threshold_lower: '0.7'
+  # needed substitutions:
+  # name_verbose:
+  # id:
+  # helper_adc_pin:
+  # id_control_led_pin:
+
+packages:
+  control-led: !include ../../modules/control-led_any_led.yaml
+
+api:
+  services:
+    - service: set_${sensor_id}
+      variables:
+        value: float
+      then:
+        - globals.set:
+            id: ${global_id}
+            value: !lambda 'return value;'
+        - component.update: ${sensor_id}
+
+logger:
+  logs:
+    sensor.${helper_adc_id}: ERROR
+
+globals:
+  - id: ${global_id}
+    type: float
+    restore_value: no
+    initial_value: '0.0'
+
+sensor:
+  - name: ${name_verbose} ${tick_unit_name} Total
+    id: ${sensor_id}
+    platform: template
+    unit_of_measurement: ${tick_unit_si}
+    accuracy_decimals: ${tick_unit_accuracy}
+    lambda: 'return id(${global_id});'
+    update_interval: ${counter_id_timeout_interval}
+
+  - id: ${helper_adc_id}
+    platform: adc
+    pin: ${helper_adc_pin}
+    update_interval: ${helper_adc_polling_interval}
+    raw: true
+    internal: true
+    unit_of_measurement: ""
+    filters:
+      - multiply: ${helper_adc_multiply}
+
+  # - platform: homeassistant
+  #   entity_id: sensor.${sensor_id}_last
+  #   id: ${homeassistant_sensor_id_last}
+
+binary_sensor:
+  - platform: analog_threshold
+    id: ${helper_binary_id}
+    sensor_id: ${helper_adc_id}
+    threshold:
+      upper: ${helper_binary_threshold_upper}
+      lower: ${helper_binary_threshold_lower}
+    filters:
+      - delayed_on: ${helper_binary_filter_delayed_on}
+    on_release:
+      - globals.set:
+          id: ${global_id}
+          value: !lambda 'return id(${global_id}) + ${tick_unit_increment};'
+      - light.toggle:
+          id: ${id_control_led}
+      - component.update: ${sensor_id}

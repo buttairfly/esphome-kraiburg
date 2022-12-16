@@ -1,0 +1,17 @@
+substitutions:
+  onboard_led_id: ${id}_onboard_led
+  light_log_level: INFO # to enable light logging set to DEFAULT
+  # needed substitutions:
+  # id:
+
+logger:
+  logs:
+    light: ${light_log_level}
+
+light:
+  - platform: neopixelbus
+    type: GRB
+    variant: SK6812
+    pin: 2
+    num_leds: 1
+    id: ${onboard_led_id}

@@ -1,6 +1,0 @@
-mqtt:
-  broker: ${mqtt_broker}
-  port: ${mqtt_port}
-  client_id: $name
-  username: ${mqtt_user}
-  password: ${mqtt_pw}

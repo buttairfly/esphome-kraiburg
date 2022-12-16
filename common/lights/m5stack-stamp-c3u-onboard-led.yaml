@@ -1,8 +1,0 @@
-platform: neopixelbus
-type: GRB
-variant: SK6812
-pin: 2
-num_leds: 1
-id: "${id}_onboard_led"
-# comment out name to be public for all c3u boards
-# name: "${name} Onboard LED"

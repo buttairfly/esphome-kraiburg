@@ -1,0 +1,32 @@
+substitutions:
+  # needed substitutions:
+  # name:
+  # name_verbose:
+  # id:
+  # i2c_sda:
+  # i2c_scl:
+
+i2c:
+  id: ${id}_i2c
+  sda: ${i2c_sda}
+  scl: ${i2c_scl}
+  frequency: 50kHz
+
+sensor:
+  - platform: bme280
+    temperature:
+      name: $name_verbose Temperature
+      id: ${id}_temperature
+      oversampling: 16x
+      accuracy_decimals: 1
+    pressure:
+      name: ${name_verbose} Pressure
+      id: ${id}_pressure
+      accuracy_decimals: 1
+    humidity:
+      name: ${name_verbose} Humidity
+      id: ${id}_humidity
+      accuracy_decimals: 1
+    i2c_id: ${id}_i2c
+    address: 0x76
+    update_interval: 60s

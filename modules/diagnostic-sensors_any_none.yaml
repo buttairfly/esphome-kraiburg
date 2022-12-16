@@ -1,0 +1,23 @@
+substitutions:
+  # needed substitutions:
+  # name_verbose:
+
+sensor:
+  - platform: wifi_signal
+    name: ${name_verbose} WiFi Signal
+    update_interval: 60s
+    entity_category: diagnostic
+  - platform: uptime
+    name: ${name_verbose} Sensor
+    update_interval: 60s
+    entity_category: diagnostic
+
+binary_sensor:
+  - platform: status
+    name: ${name_verbose} Status
+    entity_category: diagnostic
+
+switch:
+  - platform: restart
+    name: ${name_verbose} Restart
+    entity_category: diagnostic
