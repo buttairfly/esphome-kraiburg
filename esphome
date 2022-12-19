@@ -10,7 +10,7 @@ GREEN='\e[32m'
 YELLOW='\e[33m'
 BLUE='\e[34m'
 
-COMMANDS=('run' 'upload' 'rename')
+COMMANDS=('run' 'upload' 'rename' 'config' 'compile')
 for c in "${COMMANDS[@]}"; do
 	if printf '%s\0' "$ARGS" | grep -Fqz -- "$c"; then
         # check git status when calling one of $COMMANDS
