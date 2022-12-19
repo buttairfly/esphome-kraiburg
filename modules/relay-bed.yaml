@@ -6,6 +6,7 @@ switch:
   - platform: template
     name: "Bed Light"
     id: ${id}_bed_light
+    icon: mdi:bed-double
     turn_on_action:
       - switch.turn_on: ${id}_relay1_bed_light_left
       - switch.turn_on: ${id}_relay2_bed_light_right

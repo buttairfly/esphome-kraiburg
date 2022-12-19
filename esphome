@@ -4,12 +4,6 @@ SCRIPT_DIR="$(dirname -- $(readlink -fn -- "$0"))"
 source "${SCRIPT_DIR}/.env"
 ARGS=$@
 
-NONE='\e[0m'
-RED='\e[31m'
-GREEN='\e[32m'
-YELLOW='\e[33m'
-BLUE='\e[34m'
-
 COMMANDS=('run' 'upload' 'rename' 'config' 'compile')
 for c in "${COMMANDS[@]}"; do
 	if printf '%s\0' "$ARGS" | grep -Fqz -- "$c"; then
@@ -29,17 +23,5 @@ for c in "${COMMANDS[@]}"; do
         break
     fi
 done
-
-CONTAINER_PROGRAM=""
-if ! command -v podman &> /dev/null ; then
-    if ! command -v docker &> /dev/null ; then
-        echo -e "Container ${RED}podman or docker${NONE} could not be found!"
-        exit 2
-    else
-        CONTAINER_PROGRAM="docker"
-    fi
-else
-    CONTAINER_PROGRAM="podman"
-fi
 
 "${CONTAINER_PROGRAM}" run --rm -v "${SCRIPT_DIR}:/config" -it "${ESPHOME_CONTAINER}:${ESPHOME_TAG}" ${ARGS[@]}

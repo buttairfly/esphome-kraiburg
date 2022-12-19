@@ -1,0 +1,22 @@
+#!/bin/bash
+
+SCRIPT_DIR="$(dirname -- $(readlink -fn -- "$0"))"
+source "${SCRIPT_DIR}/.env"
+FILES=( * )
+
+EXIT=0
+
+for file in "${FILES[@]}"; do
+    if [[ -n $( echo "${file}" | grep '.*\.yaml$' | grep -vF 'secrets.yaml' ) ]]; then
+        echo -e "Testing ${YELLOW}${file}${NONE}..."
+        if [[ -n $( "${CONTAINER_PROGRAM}" run --rm -v "${SCRIPT_DIR}:/config" -it "${ESPHOME_CONTAINER}:${ESPHOME_TAG}" config "${file}" | grep -F 'INFO Configuration is valid!' ) ]]; then
+            echo -e "${GREEN}${file}${NONE} is fine."
+        else
+            "${CONTAINER_PROGRAM}" run --rm -v "${SCRIPT_DIR}:/config" -it "${ESPHOME_CONTAINER}:${ESPHOME_TAG}" config "${file}"
+            echo -e "${RED}${file}${NONE} has config errors!"
+            EXIT=1
+        fi
+    fi
+done
+
+exit ${EXIT}
