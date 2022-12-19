@@ -8,18 +8,26 @@ switch:
     id: ${id}_relay1_bed_light_left
     icon: mdi:bed-double-outline
     pin: GPIO3
+    restore_mode: ALWAYS_OFF
+    device_class: switch
   - platform: gpio
     name: Bed Light Right
     id: ${id}_relay2_bed_light_right
     icon: mdi:bed-double-outline
     pin: GPIO4
+    restore_mode: ALWAYS_OFF
+    device_class: switch
   - platform: gpio
     name: Relay3
     id: ${id}_relay3
     icon: mdi:electric-switch
     pin: GPIO0
+    restore_mode: ALWAYS_OFF
+    device_class: switch
   - platform: gpio
-    name: Bed Light Right
+    name: Relay4
     id: ${id}_relay4
     icon: mdi:electric-switch
     pin: GPIO1
+    restore_mode: ALWAYS_OFF
+    device_class: switch
