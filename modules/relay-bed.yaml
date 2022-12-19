@@ -6,12 +6,6 @@ switch:
   - platform: template
     name: "Bed Light"
     id: ${id}_bed_light
-    lambda: |-
-      if (id(some_binary_sensor).state) {
-        return true;
-      } else {
-        return false;
-      }
     turn_on_action:
       - switch.turn_on: ${id}_relay1_bed_light_left
       - switch.turn_on: ${id}_relay2_bed_light_right
@@ -36,7 +30,8 @@ switch:
       inverted: true
     restore_mode: ALWAYS_OFF
     device_class: switch
-  - platform: gpio
+  - # currently unused relay
+    platform: gpio
     name: Relay3
     id: ${id}_relay3
     icon: mdi:electric-switch
@@ -46,7 +41,8 @@ switch:
     restore_mode: ALWAYS_OFF
     device_class: switch
     internal: true
-  - platform: gpio
+  - # currently unused relay
+    platform: gpio
     name: Relay4
     id: ${id}_relay4
     icon: mdi:electric-switch
