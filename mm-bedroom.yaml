@@ -1,0 +1,25 @@
+substitutions:
+  name: mm-sleep
+  id: mm_sleep
+  name_verbose: ElaMax Sleep
+  # pins
+  i2c_sda: GPIO5
+  i2c_scl: GPIO6
+  # secrets
+  ota_pw: !secret ota_pw
+  wifi_home_ssid: !secret wifi_home_ssid
+  wifi_home_pw: !secret wifi_home_pw
+  wifi_fallback_pw: !secret wifi_fallback_pw
+
+packages:
+  board: !include /config/boards/m5stack-stamp-c3u.yaml
+  git-version: !include /config/packages/git-version.yaml
+  wifi: !include /config/packages/wifi.yaml
+  common-defaults: !include /config/packages/common-defaults.yaml
+  diagnostic-sensors: !include /config/packages/diagnostic-sensors.yaml
+  # specific
+  onboard-led: !include /config/packages/m5stack-stamp-c3u/onboard-led.yaml
+  boot-led: !include /config/packages/m5stack-stamp-c3u/boot-led.yaml
+  bme280: !include /config/packages/sensors/environment/bme280.yaml
+  bme280-available-script: !include /config/packages/m5stack-stamp-c3u/bme280-available-script.yaml
+  relay_bed: !include /config/packages/relay-bed.yaml

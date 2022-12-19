@@ -29,11 +29,11 @@ script:
                   'id(${id}_humidity).state'
                 ]
             - light.turn_on:
-                <<: !include ./snippets/color-presets_any_led-rgb/orange.yaml
+                <<: !include /config/snippets/color-presets/orange.yaml
                 brightness: 100%
             - delay: 500ms
             - light.turn_on:
-                <<: !include ./snippets/color-presets_any_led-rgb/orange.yaml
+                <<: !include /config/snippets/color-presets/orange.yaml
                 brightness: 50%
             - delay: 500ms
       - logger.log:
@@ -45,10 +45,10 @@ script:
             'id(${id}_humidity).state'
           ]
       - light.turn_on:
-          <<: !include ./snippets/color-presets_any_led-rgb/green.yaml
+          <<: !include /config/snippets/color-presets/green.yaml
       - delay: 5s
       - light.turn_off:
-          <<: !include ./snippets/color-presets_any_led-rgb/_off.yaml
+          <<: !include /config/snippets/color-presets/_off.yaml
 
 esphome:
   on_boot:

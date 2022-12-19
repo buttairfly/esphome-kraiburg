@@ -13,12 +13,12 @@ esphome:
       then:
         - logger.log: "Boot - init - LED blue dimmed"
         - light.turn_on:
-            <<: !include ./snippets/color-presets_any_led-rgb/blue.yaml
+            <<: !include /config/snippets/color-presets/blue.yaml
             brightness: 10%
             transition_length: 0ms
         - delay: 500ms
         - light.turn_on:
-            <<: !include ./snippets/color-presets_any_led-rgb/blue.yaml
+            <<: !include /config/snippets/color-presets/blue.yaml
             brightness: 100%
             transition_length: 1500ms
         - logger.log: "Boot - problem with wifi - LED blue"
@@ -26,17 +26,17 @@ esphome:
       then:
         - logger.log: "Boot - wifi established - LED cyan dimmed"
         - light.turn_on:
-            <<: !include ./snippets/color-presets_any_led-rgb/cyan.yaml
+            <<: !include /config/snippets/color-presets/cyan.yaml
             brightness: 10%
     - priority: 200
       then:
         - logger.log: "Boot - api connected - LED green dimmed"
         - light.turn_on:
-            <<: !include ./snippets/color-presets_any_led-rgb/green.yaml
+            <<: !include /config/snippets/color-presets/green.yaml
             brightness: 10%
         - delay: 500ms
         - light.turn_off:
-            <<: !include ./snippets/color-presets_any_led-rgb/_off.yaml
+            <<: !include /config/snippets/color-presets/_off.yaml
         - logger.log:
             format: "Boot - initialized - LED off"
             level: INFO

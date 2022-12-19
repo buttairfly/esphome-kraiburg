@@ -13,11 +13,10 @@ substitutions:
   wifi_fallback_pw: !secret wifi_fallback_pw
 
 packages:
-  board: !include ./boards/az-delivery-devkitc-v4.yaml
-  git-version: !include ./modules/git-version_any_none.yaml
-  wifi: !include ./modules/wifi_any_none.yaml
-  common-defaults: !include ./modules/common-defaults_any_none.yaml
-  diagnostic-sensors: !include ./modules/diagnostic-sensors_any_none.yaml
+  board: !include /config/boards/az-delivery-devkitc-v4.yaml
+  git-version: !include /config/packages/git-version.yaml
+  wifi: !include /config/packages/wifi.yaml
+  common-defaults: !include /config/packages/common-defaults.yaml
+  diagnostic-sensors: !include /config/packages/diagnostic-sensors.yaml
   # specific
-  tick-analog-counter: !include ./sensors/integrator/tick-analog-counter_any_none.yaml
-  tick-analog-counter-boot-setter: !include ./sensors/integrator/tick-analog-counter-boot-setter_any_none.yaml
+  energy-tick-counter: !include /config/packages/sensors/integrator/energy-tick-counter.yaml
