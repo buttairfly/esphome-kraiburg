@@ -24,7 +24,7 @@ switch:
     name: Bed Light Left
     id: ${id}_relay1_bed_light_left
     icon: mdi:bed-double-outline
-    pin: 
+    pin:
       number: GPIO3
       inverted: true
     restore_mode: ALWAYS_OFF
@@ -33,7 +33,7 @@ switch:
     name: Bed Light Right
     id: ${id}_relay2_bed_light_right
     icon: mdi:bed-double-outline
-    pin: 
+    pin:
       number: GPIO4
       inverted: true
     restore_mode: ALWAYS_OFF
@@ -43,7 +43,7 @@ switch:
     name: Relay3
     id: ${id}_relay3
     icon: mdi:electric-switch
-    pin: 
+    pin:
       number: GPIO1
       inverted: true
     restore_mode: ALWAYS_OFF
@@ -54,7 +54,7 @@ switch:
     name: Relay4
     id: ${id}_relay4
     icon: mdi:electric-switch
-    pin: 
+    pin:
       number: GPIO0
       inverted: true
     restore_mode: ALWAYS_OFF

@@ -12,7 +12,7 @@ for c in "${COMMANDS[@]}"; do
             echo -e "You have ${YELLOW}uncommited changes${NONE}:"
             git status --short
             read -p $'Do you want to \e[34mproceed\e[0m? (\e[33myN\e[0m): ' YN
-            case $YN in 
+            case $YN in
                 y ) echo -e "${GREEN}Proceeding${NONE}...\n";;
                 * ) echo -e "${RED}Aborted${NONE}";
                     exit 1;;
