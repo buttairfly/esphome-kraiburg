@@ -22,3 +22,4 @@ packages:
   boot_led_script: !include ./modules/boot-led_m5stack-stamp-c3u_onboard-led.yaml
   available_script_bme280: !include ./modules/available-script_m5stack-stamp-c3u_bme280_onboard-led.yaml
   bme280: !include ./sensors/environment/bme280_any_none.yaml
+  relays: !include ./modules/relay-bed.yaml

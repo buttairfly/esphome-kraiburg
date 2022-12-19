@@ -1,8 +1,8 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(dirname -- $(readlink -fn -- "$0"))"
-ARGS=$@
 source "${SCRIPT_DIR}/.env"
+ARGS=$@
 
 NONE='\e[0m'
 RED='\e[31m'
@@ -12,7 +12,7 @@ BLUE='\e[34m'
 
 COMMANDS=('run' 'upload' 'rename')
 for c in "${COMMANDS[@]}"; do
-	if printf '%s\0' "$ARGS" | grep -Fxqz -- "$c"; then
+	if printf '%s\0' "$ARGS" | grep -Fqz -- "$c"; then
         # check git status when calling one of $COMMANDS
         if GIT_STATUS=$(git status --porcelain) && [ -n "$GIT_STATUS" ]; then
             echo -e "You have ${YELLOW}uncommited changes${NONE}:"
@@ -24,7 +24,7 @@ for c in "${COMMANDS[@]}"; do
                     exit 1;;
             esac
         fi
-        # append version to config
+        echo -e "Appending ${BLUE}version${NONE} to args."
         ARGS=( "-s" "version" "${GIT_VERSION}" ${ARGS[@]} )
         break
     fi
@@ -42,4 +42,4 @@ else
     CONTAINER_PROGRAM="podman"
 fi
 
-"${CONTAINER_PROGRAM}" run --rm -v "${SCRIPT_DIR}":/config -it docker.io/esphome/esphome:"${ESPHOME_TAG}" "${ARGS[@]}"
+"${CONTAINER_PROGRAM}" run --rm -v "${SCRIPT_DIR}:/config" -it "${ESPHOME_CONTAINER}:${ESPHOME_TAG}" ${ARGS[@]}
