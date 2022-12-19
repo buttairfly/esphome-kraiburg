@@ -3,6 +3,21 @@ substitutions:
   # id:
 
 switch:
+  - platform: template
+    name: "Bed Light"
+    id: ${id}_bed_light
+    lambda: |-
+      if (id(some_binary_sensor).state) {
+        return true;
+      } else {
+        return false;
+      }
+    turn_on_action:
+      - switch.turn_on: ${id}_relay1_bed_light_left
+      - switch.turn_on: ${id}_relay1_bed_light_right
+    turn_off_action:
+      - switch.turn_off: ${id}_relay1_bed_light_left
+      - switch.turn_off: ${id}_relay1_bed_light_right
   - platform: gpio
     name: Bed Light Left
     id: ${id}_relay1_bed_light_left
