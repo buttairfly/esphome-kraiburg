@@ -24,6 +24,7 @@ switch:
     pin: GPIO0
     restore_mode: ALWAYS_OFF
     device_class: switch
+    internal: true
   - platform: gpio
     name: Relay4
     id: ${id}_relay4
@@ -31,3 +32,4 @@ switch:
     pin: GPIO1
     restore_mode: ALWAYS_OFF
     device_class: switch
+    internal: true
