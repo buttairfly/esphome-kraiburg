@@ -2,6 +2,7 @@ substitutions:
   name: mm-office
   id: mmm_office
   name_verbose: ElaMax Office
+  name_old: ${name} # change for renameing a device
   # pins
   i2c_sda: GPIO5
   i2c_scl: GPIO6

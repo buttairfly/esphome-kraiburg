@@ -1,14 +1,16 @@
 substitutions:
   # needed substitutions:
-  # name
+  # name:
+  # name_old:
   # wifi_home_ssid:
-  # wifi_home_pw
-  # wifi_fallback_pw
-  # ota_pw
+  # wifi_home_pw:
+  # wifi_fallback_pw;
+  # ota_pw:
 
 wifi:
   ssid: ${wifi_home_ssid}
   password: ${wifi_home_pw}
+  use_address: ${name_old}.local
   ap: # Enable fallback hotspot (captive portal) in case wifi connection fails
     ssid: ${name}.fallback
     password: ${wifi_fallback_pw}

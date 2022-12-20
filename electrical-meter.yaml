@@ -2,6 +2,7 @@ substitutions:
   name: electrical-meter
   id: electrical_meter
   name_verbose: Electrical Meter
+  name_old: ${name} # change for renameing a device
   # pins
   helper_binary_pin: GPIO35
   helper_adc_pin: GPIO32
