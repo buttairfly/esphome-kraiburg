@@ -9,6 +9,7 @@ substitutions:
   # id:
   # helper_adc_pin:
   # id_control_led_pin:
+  # # homeassistant_sensor_id_last
 
 packages:
   control-led: !include /config/packages/control-led.yaml
@@ -24,9 +25,22 @@ api:
             value: !lambda 'return value;'
         - component.update: ${sensor_id}
 
-logger:
-  logs:
-    sensor.${helper_adc_id}: ERROR
+# esphome:
+#   on_boot:
+#     - priority: 200
+#       then:
+#         - wait_until:
+#             api.connected:
+#         - delay: 500ms
+#         - globals.set:
+#             id: ${global_id}
+#             value: !lambda 'return id(${homeassistant_sensor_id_last}).state;'
+#         - component.update: ${sensor_id}
+
+# sensor:
+#   - platform: homeassistant
+#     entity_id: sensor.${sensor_id}_last
+#     id: ${homeassistant_sensor_id_last}
 
 globals:
   - id: ${global_id}
@@ -43,23 +57,28 @@ sensor:
     lambda: return id(${global_id});
     update_interval: 60s
 
-  - id: ${helper_adc_id}
+  - name: ${name_verbose} ADC
+    id: ${helper_adc_id}
     platform: adc
     pin: ${helper_adc_pin}
     update_interval: 10ms
     raw: true
-    internal: true
+    # internal: true
+    entity_category: diagnostic
     unit_of_measurement: ''
     filters:
-      - multiply: 0.00024420024     # 1/(2^12-1)
+      - multiply: 0.00024420024 # 1/(2^12-1)
 
 binary_sensor:
-  - platform: analog_threshold
+  - name: ${name_verbose} Tick
+    platform: analog_threshold
     id: ${helper_binary_id}
     sensor_id: ${helper_adc_id}
     threshold:
       upper: 0.9999
       lower: 0.7
+    # internal: true
+    entity_category: diagnostic
     filters:
       - delayed_on: 50ms
     on_release:
