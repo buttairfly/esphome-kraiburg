@@ -4,7 +4,7 @@ substitutions:
 
 switch:
   - platform: template
-    name: "Bed Light"
+    name: ${name_verbose} Bed Light
     id: ${id}_bed_light
     icon: mdi:bed-double
     turn_on_action:
@@ -14,7 +14,7 @@ switch:
       - switch.turn_off: ${id}_relay1
       - switch.turn_off: ${id}_relay2
   - platform: gpio
-    name: Bed Light Left
+    name: ${name_verbose} Bed Light Max
     id: ${id}_relay1
     icon: mdi:bed-double-outline
     pin:
@@ -35,7 +35,7 @@ switch:
           then:
             - lambda: id(${id}_bed_light).publish_state(false);
   - platform: gpio
-    name: Bed Light Right
+    name: ${name_verbose} Bed Light Ela
     id: ${id}_relay2
     icon: mdi:bed-double-outline
     pin:
