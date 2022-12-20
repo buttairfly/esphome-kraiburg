@@ -18,7 +18,7 @@ done
 
 GIT_STATUS_COMMANDS=('run' 'upload' 'rename')
 for c in "${GIT_STATUS_COMMANDS[@]}"; do
-	if printf '%s\0' "$ESPHOME_ARGS" | grep -Fqz -- "$c"; then
+	if printf '%s\n' "${ESPHOME_ARGS[@]}" | grep -Fqz -- "$c"; then
         # check git status when calling one of $GIT_STATUS_COMMANDS
         if GIT_STATUS=$(git status --porcelain) && [ -n "$GIT_STATUS" ]; then
             echo -e "You have ${YELLOW}uncommited changes${NONE}:"
@@ -36,11 +36,13 @@ done
 
 VERSION_COMMANDS=('run' 'upload' 'rename' 'config' 'compile' 'clean' 'logs')
 for c in "${VERSION_COMMANDS[@]}"; do
-	if printf '%s\0' "$ESPHOME_ARGS" | grep -Fqz -- "$c"; then
+	if printf '%s\n' "${ESPHOME_ARGS[@]}" | grep -Fqz -- "$c"; then
         echo -e "Appending ${BLUE}version${NONE} to esphome args."
         ESPHOME_ARGS=( "-s" "version" "${GIT_VERSION}" ${ESPHOME_ARGS[@]} )
         break
     fi
 done
+
+echo -e "${BLUE}esphome args${NONE}: ${ESPHOME_ARGS[@]}"
 
 "${CONTAINER_PROGRAM}" run ${DOCKER_ARGS[@]} --rm -v "${SCRIPT_DIR}:/config" -it "${ESPHOME_CONTAINER}:${ESPHOME_TAG}" ${ESPHOME_ARGS[@]}
