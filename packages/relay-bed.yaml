@@ -7,37 +7,54 @@ switch:
     name: "Bed Light"
     id: ${id}_bed_light
     icon: mdi:bed-double
-    lambda: |-
-      if (${id}_relay1_bed_light_left.state && ${id}_relay2_bed_light_right) {
-        return true;
-      }
-      if (! ${id}_relay1_bed_light_left.state && ! ${id}_relay2_bed_light_right) {
-        return false;
-      }
     turn_on_action:
-      - switch.turn_on: ${id}_relay1_bed_light_left
-      - switch.turn_on: ${id}_relay2_bed_light_right
+      - switch.turn_on: ${id}_relay1
+      - switch.turn_on: ${id}_relay2
     turn_off_action:
-      - switch.turn_off: ${id}_relay1_bed_light_left
-      - switch.turn_off: ${id}_relay2_bed_light_right
+      - switch.turn_off: ${id}_relay1
+      - switch.turn_off: ${id}_relay2
   - platform: gpio
     name: Bed Light Left
-    id: ${id}_relay1_bed_light_left
+    id: ${id}_relay1
     icon: mdi:bed-double-outline
     pin:
       number: GPIO3
       inverted: true
     restore_mode: ALWAYS_OFF
     device_class: switch
+    on_turn_on:
+      - if:
+          condition:
+            lambda: 'return id(${id}_relay2).state;'
+          then:
+            - switch.turn_on: ${id}_bed_light
+    on_turn_off:
+      - if:
+          condition:
+            lambda: 'return ! id(${id}_relay2).state;'
+          then:
+            - switch.turn_off: ${id}_bed_light
   - platform: gpio
     name: Bed Light Right
-    id: ${id}_relay2_bed_light_right
+    id: ${id}_relay2
     icon: mdi:bed-double-outline
     pin:
       number: GPIO4
       inverted: true
     restore_mode: ALWAYS_OFF
     device_class: switch
+    on_turn_on:
+      - if:
+          condition:
+            lambda: 'return id(${id}_relay1).state;'
+          then:
+            - switch.turn_on: ${id}_bed_light
+    on_turn_off:
+      - if:
+          condition:
+            lambda: 'return ! id(${id}_relay1).state;'
+          then:
+            - switch.turn_off: ${id}_bed_light
   - # currently unused relay
     platform: gpio
     name: Relay3

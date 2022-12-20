@@ -51,7 +51,7 @@ sensor:
     platform: template
     unit_of_measurement: ${tick_unit_si}
     accuracy_decimals: ${tick_unit_accuracy}
-    lambda: 'return id(${global_id});'
+    lambda: return id(${global_id});
     update_interval: ${counter_id_timeout_interval}
 
   - id: ${helper_adc_id}
@@ -60,7 +60,7 @@ sensor:
     update_interval: ${helper_adc_polling_interval}
     raw: true
     internal: true
-    unit_of_measurement: ""
+    unit_of_measurement: ''
     filters:
       - multiply: ${helper_adc_multiply}
 

@@ -4,7 +4,7 @@ SCRIPT_DIR="$(dirname -- $(readlink -fn -- "$0"))"
 source "${SCRIPT_DIR}/.env"
 ARGS=$@
 
-COMMANDS=('run' 'upload' 'rename' 'config' 'compile')
+COMMANDS=('run' 'upload' 'rename' 'config' 'compile' 'clean')
 for c in "${COMMANDS[@]}"; do
 	if printf '%s\0' "$ARGS" | grep -Fqz -- "$c"; then
         # check git status when calling one of $COMMANDS

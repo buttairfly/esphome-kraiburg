@@ -1,0 +1,23 @@
+#!/bin/bash
+
+SCRIPT_DIR="$(dirname -- $(readlink -fn -- "$0"))"
+source "${SCRIPT_DIR}/.env"
+FILES=( * )
+
+EXIT=0
+
+for file in "${FILES[@]}"; do
+    if [[ -n $( echo "${file}" | grep '.*\.yaml$' | grep -vF 'secrets.yaml' ) ]]; then
+        echo -e "Testing ${BLUE}${file}${NONE}..."
+        if "${CONTAINER_PROGRAM}" run --rm -v "${SCRIPT_DIR}:/config" -it "${ESPHOME_CONTAINER}:${ESPHOME_TAG}" "-s" "version" "${GIT_VERSION}" config "${file}" > /dev/null ; then
+            echo -e "${LAST_LINE}Testing ${BLUE}${file}${NONE}: ${GREEN}🗸${NONE}"
+        else
+            echo -e "${LAST_LINE}Testing ${BLUE}${file}${NONE}: has ${RED}config/compile errors${NONE}!"
+            "${CONTAINER_PROGRAM}" run --rm -v "${SCRIPT_DIR}:/config" -it "${ESPHOME_CONTAINER}:${ESPHOME_TAG}" "-s" "version" "${GIT_VERSION}" config "${file}"
+            echo
+            EXIT=1
+        fi
+    fi
+done
+
+exit ${EXIT}

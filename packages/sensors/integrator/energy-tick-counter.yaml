@@ -40,7 +40,7 @@ sensor:
     platform: template
     unit_of_measurement: kWh
     accuracy_decimals: 2
-    lambda: 'return id(${global_id});'
+    lambda: return id(${global_id});
     update_interval: 60s
 
   - id: ${helper_adc_id}
@@ -49,9 +49,9 @@ sensor:
     update_interval: 10ms
     raw: true
     internal: true
-    unit_of_measurement: ""
+    unit_of_measurement: ''
     filters:
-      - multiply: 0.00024420024 # 1/(2^12-1)
+      - multiply: 0.00024420024     # 1/(2^12-1)
 
 binary_sensor:
   - platform: analog_threshold
