@@ -25,15 +25,15 @@ switch:
     on_turn_on:
       - if:
           condition:
-            lambda: 'return id(${id}_relay2).state;'
+            switch.is_on: ${id}_relay2
           then:
-            - switch.turn_on: ${id}_bed_light
+            - lambda: id(${id}_bed_light).publish_state(true);
     on_turn_off:
       - if:
           condition:
-            lambda: 'return ! id(${id}_relay2).state;'
+            switch.is_off: ${id}_relay2
           then:
-            - switch.turn_off: ${id}_bed_light
+            - lambda: id(${id}_bed_light).publish_state(false);
   - platform: gpio
     name: Bed Light Right
     id: ${id}_relay2
@@ -46,15 +46,15 @@ switch:
     on_turn_on:
       - if:
           condition:
-            lambda: 'return id(${id}_relay1).state;'
+            switch.is_on: ${id}_relay1
           then:
-            - switch.turn_on: ${id}_bed_light
+            - lambda: id(${id}_bed_light).publish_state(true);
     on_turn_off:
       - if:
           condition:
-            lambda: 'return ! id(${id}_relay1).state;'
+            switch.is_off: ${id}_relay1
           then:
-            - switch.turn_off: ${id}_bed_light
+            - lambda: id(${id}_bed_light).publish_state(false);
   - # currently unused relay
     platform: gpio
     name: Relay3
