@@ -7,7 +7,6 @@ DOCKER_ARGS=()
 ESPHOME_ARGS=()
 
 for arg in "$@"; do
-    echo "I am here  $arg"
     if [[ "$arg" =~ ^--device=.* ]]; then
         DOCKER_ARGS+=("$arg")
     elif [[ "$arg" =~ ^--net=.* ]]; then
