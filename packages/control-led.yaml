@@ -10,6 +10,7 @@ light:
     name: ${name}-control-led
     id: ${id_control_led}
     output: ${id_control_led}_output
+    entity_category: diagnostic
 
 output:
   - id: ${id_control_led}_output

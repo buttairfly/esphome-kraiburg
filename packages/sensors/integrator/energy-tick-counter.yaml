@@ -79,6 +79,7 @@ sensor:
   - name: ${name_verbose} Energy Total
     id: ${sensor_energy_id}
     platform: template
+    icon: mdi:home-lightning-bold
     unit_of_measurement: kWh
     accuracy_decimals: 2
     lambda: return id(${global_ticks_id}) * id(${global_energy_multiplicator_id}) + id(${global_energy_base_id});
@@ -86,6 +87,7 @@ sensor:
   - name: ${name_verbose} Ticks
     id: ${sensor_ticks_id}
     platform: template
+    icon: mdi:counter
     unit_of_measurement: ''
     accuracy_decimals: 0
     lambda: return id(${global_ticks_id});
@@ -96,6 +98,7 @@ sensor:
   - name: ${name_verbose} Multiplicator
     id: ${helper_multiplicator}
     platform: template
+    icon: mdi:numeric
     unit_of_measurement: ''
     accuracy_decimals: 6
     entity_category: diagnostic
