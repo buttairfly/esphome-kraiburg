@@ -1,6 +1,11 @@
 substitutions:
-  sensor_id: ${id}_energy_total
-  global_id: ${sensor_id}_value
+  sensor_id: ${id}_energy
+  sensor_ticks_id: ${sensor_id}_ticks
+  sensor_energy_id: ${sensor_id}_total
+  global_ticks_id: global_${sensor_id}_ticks
+  global_energy_base_id: global_${sensor_id}_base
+  global_energy_multiplicator_id: global_${sensor_id}_multiplicator
+  helper_multiplicator: ${sensor_id}_multiplicator
   helper_sensor: ${sensor_id}_raw
   helper_adc_id: ${helper_sensor}_adc
   helper_binary_id: ${helper_sensor}_binary
@@ -16,14 +21,28 @@ packages:
 
 api:
   services:
-    - service: set_${sensor_id}
+    - service: set_${sensor_energy_id}
       variables:
         value: float
       then:
         - globals.set:
-            id: ${global_id}
+            id: ${global_energy_base_id}
             value: !lambda 'return value;'
-        - component.update: ${sensor_id}
+        - globals.set:
+            id: ${global_ticks_id}
+            value: !lambda 'return 0;'
+        - light.turn_off:
+            id: ${id_control_led}
+        - component.update: ${sensor_ticks_id}
+    - service: set_${helper_multiplicator}
+      variables:
+        value: float
+      then:
+        - globals.set:
+            id: ${global_energy_multiplicator_id}
+            value: !lambda 'return value;'
+        - component.update: ${sensor_ticks_id}
+        - component.update: ${helper_multiplicator}
 
 # esphome:
 #   on_boot:
@@ -43,19 +62,45 @@ api:
 #     id: ${homeassistant_sensor_id_last}
 
 globals:
-  - id: ${global_id}
+  - id: ${global_ticks_id}
+    type: int
+    restore_value: no
+    initial_value: '0'
+  - id: ${global_energy_base_id}
     type: float
     restore_value: no
-    initial_value: '0.0'
+    initial_value: 'nan'
+  - id: ${global_energy_multiplicator_id}
+    type: float
+    restore_value: no
+    initial_value: '0.01'
 
 sensor:
   - name: ${name_verbose} Energy Total
-    id: ${sensor_id}
+    id: ${sensor_energy_id}
     platform: template
     unit_of_measurement: kWh
     accuracy_decimals: 2
-    lambda: return id(${global_id});
+    lambda: return id(${global_ticks_id}) * id(${global_energy_multiplicator_id}) + id(${global_energy_base_id});
     update_interval: 60s
+  - name: ${name_verbose} Ticks
+    id: ${sensor_ticks_id}
+    platform: template
+    unit_of_measurement: ''
+    accuracy_decimals: 0
+    lambda: return id(${global_ticks_id});
+    update_interval: 60s
+    on_value:
+      - component.update: ${sensor_energy_id}
+
+  - name: ${name_verbose} Multiplicator
+    id: ${helper_multiplicator}
+    platform: template
+    unit_of_measurement: ''
+    accuracy_decimals: 6
+    entity_category: diagnostic
+    lambda: return id(${global_energy_multiplicator_id});
+    update_interval: 24h
 
   - name: ${name_verbose} ADC
     id: ${helper_adc_id}
@@ -63,7 +108,7 @@ sensor:
     pin: ${helper_adc_pin}
     update_interval: 10ms
     raw: true
-    # internal: true
+    internal: true
     entity_category: diagnostic
     unit_of_measurement: ''
     filters:
@@ -83,8 +128,8 @@ binary_sensor:
       - delayed_on: 50ms
     on_release:
       - globals.set:
-          id: ${global_id}
-          value: !lambda 'return id(${global_id}) + 0.01;'
+          id: ${global_ticks_id}
+          value: !lambda 'return id(${global_ticks_id}) + 1;'
       - light.toggle:
           id: ${id_control_led}
-      - component.update: ${sensor_id}
+      - component.update: ${sensor_ticks_id}
