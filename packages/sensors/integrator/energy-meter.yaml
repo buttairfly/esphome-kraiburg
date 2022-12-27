@@ -122,7 +122,7 @@ binary_sensor:
   - name: ${name_verbose} Tick
     id: ${helper_binary_id}
     platform: analog_threshold
-    icon: mdi:square_wave
+    icon: mdi:square-wave
     sensor_id: ${helper_adc_id}
     threshold:
       upper: 0.9999
