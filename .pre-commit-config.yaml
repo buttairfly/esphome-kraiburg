@@ -10,3 +10,11 @@ repos:
       - id: check-case-conflict
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
+  - repo: local
+    hooks:
+      - id: esphome-test
+        name: Test ESPhome configs
+        entry: ./test-configs
+        language: script
+        types: [yaml]
+        pass_filenames: false
