@@ -72,11 +72,11 @@ globals:
     initial_value: '0.0'
   - id: ${global_energy_multiplicator_id}
     type: float
-    restore_value: no
+    restore_value: yes
     initial_value: '0.01'
 
 sensor:
-  - name: ${name_verbose} Energy Total
+  - name: ${name_verbose} Energy
     id: ${sensor_energy_id}
     platform: template
     icon: mdi:home-lightning-bolt
@@ -108,6 +108,7 @@ sensor:
   - name: ${name_verbose} ADC
     id: ${helper_adc_id}
     platform: adc
+    icon: mdi:waveform
     pin: ${helper_adc_pin}
     update_interval: 10ms
     raw: true
@@ -119,8 +120,9 @@ sensor:
 
 binary_sensor:
   - name: ${name_verbose} Tick
-    platform: analog_threshold
     id: ${helper_binary_id}
+    platform: analog_threshold
+    icon: mdi:square_wave
     sensor_id: ${helper_adc_id}
     threshold:
       upper: 0.9999
