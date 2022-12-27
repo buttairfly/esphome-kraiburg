@@ -20,4 +20,4 @@ packages:
   common-defaults: !include /config/packages/common-defaults.yaml
   diagnostic-sensors: !include /config/packages/diagnostic-sensors.yaml
   # specific
-  energy-tick-counter: !include /config/packages/sensors/integrator/energy-tick-counter.yaml
+  energy-tick-counter: !include /config/packages/sensors/integrator/energy-meter.yaml
