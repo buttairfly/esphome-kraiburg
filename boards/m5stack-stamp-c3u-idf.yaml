@@ -1,0 +1,16 @@
+esphome:
+  name: $name
+  platformio_options:
+    board_build.flash_mode: dio
+    platform_packages:
+     - toolchain-riscv32-esp @ 8.4.0+2021r1
+     - toolchain-xtensa-esp32s2 @ 8.4.0+2021r1
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: esp32c3
+  framework:
+    type: esp-idf
+
+logger:
+  hardware_uart: USB_SERIAL_JTAG

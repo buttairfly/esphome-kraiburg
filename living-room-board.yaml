@@ -10,13 +10,13 @@ substitutions:
   wifi_fallback_pw: !secret wifi_fallback_pw
 
 packages:
-  board: !include /config/boards/m5stack-stamp-c3u.yaml
+  board: !include /config/boards/m5stack-stamp-c3u-idf.yaml
   git-version: !include /config/packages/git-version.yaml
   wifi: !include /config/packages/wifi.yaml
-  common-defaults: !include /config/packages/common-defaults.yaml
+  # common-defaults: !include /config/packages/common-defaults.yaml
   diagnostic-sensors: !include /config/packages/diagnostic-sensors.yaml
   # specific
-  onboard-led: !include /config/packages/m5stack-stamp-c3u/onboard-led.yaml
-  boot-led: !include /config/packages/m5stack-stamp-c3u/boot-led.yaml
-  bme280: !include /config/packages/sensors/environment/bme280.yaml
-  bme280-available-script: !include /config/packages/m5stack-stamp-c3u/bme280-available-script.yaml
+  # onboard-led: !include /config/packages/m5stack-stamp-c3u/onboard-led.yaml
+  # boot-led: !include /config/packages/m5stack-stamp-c3u/boot-led.yaml
+  # bme280: !include /config/packages/sensors/environment/bme280.yaml
+  # bme280-available-script: !include /config/packages/m5stack-stamp-c3u/bme280-available-script.yaml
