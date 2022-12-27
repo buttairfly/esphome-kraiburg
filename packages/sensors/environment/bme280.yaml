@@ -1,10 +1,10 @@
 substitutions:
+  i2c_sda: GPIO5
+  i2c_scl: GPIO6
   # needed substitutions:
   # name:
   # name_verbose:
   # id:
-  # i2c_sda:
-  # i2c_scl:
 
 i2c:
   id: ${id}_i2c

@@ -1,7 +1,7 @@
 substitutions:
-  name: mm-office
-  id: mmm_office
-  name_verbose: ElaMax Office
+  name: living-room-board
+  id: living_room_board
+  name_verbose: Wohnzimmmer
   name_old: ${name} # change for renameing a device
   # secrets
   ota_pw: !secret ota_pw

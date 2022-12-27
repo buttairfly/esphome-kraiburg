@@ -3,9 +3,6 @@ substitutions:
   id: mm_sleep
   name_verbose: ElaMax Sleep
   name_old: ${name} # change for renameing a device
-  # pins
-  i2c_sda: GPIO5
-  i2c_scl: GPIO6
   # secrets
   ota_pw: !secret ota_pw
   wifi_home_ssid: !secret wifi_home_ssid
