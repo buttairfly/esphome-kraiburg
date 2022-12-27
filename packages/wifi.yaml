@@ -15,7 +15,7 @@ wifi:
     ssid: ${name}.fallback
     password: ${wifi_fallback_pw}
 
-# captive_portal:
+captive_portal:
 
 ota:
   password: ${ota_pw}

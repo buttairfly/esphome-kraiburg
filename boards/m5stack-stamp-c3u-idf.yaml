@@ -1,5 +1,9 @@
+# deprecated! use m5stack-stamp-c3u.yaml
+# example run:
+# podman run --rm --device=/dev/ttyACM0 -v /home/keks/code/esphome/home:/config -it docker.io/esphome/esphome:2022.11 run living-room-board.yaml
 esphome:
   name: $name
+  min_version: '2022.11'
   platformio_options:
     board_build.flash_mode: dio
     platform_packages:

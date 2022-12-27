@@ -12,8 +12,8 @@ substitutions:
   # needed substitutions:
   # name_verbose:
   # id:
-  # helper_adc_pin:
-  # id_control_led_pin:
+  # adc_pin:
+  # control_led_pin:
   # # homeassistant_sensor_id_last
 
 packages:
@@ -32,7 +32,7 @@ api:
             id: ${global_ticks_id}
             value: !lambda 'return 0;'
         - light.turn_off:
-            id: ${id_control_led}
+            id: ${control_led_id}
         - component.update: ${sensor_ticks_id}
     - service: set_${helper_multiplicator}
       variables:
@@ -109,7 +109,7 @@ sensor:
     id: ${helper_adc_id}
     platform: adc
     icon: mdi:waveform
-    pin: ${helper_adc_pin}
+    pin: ${adc_pin}
     update_interval: 10ms
     raw: true
     internal: true
@@ -136,5 +136,5 @@ binary_sensor:
           id: ${global_ticks_id}
           value: !lambda 'return id(${global_ticks_id}) + 1;'
       - light.toggle:
-          id: ${id_control_led}
+          id: ${control_led_id}
       - component.update: ${sensor_ticks_id}

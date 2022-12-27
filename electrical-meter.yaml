@@ -4,9 +4,9 @@ substitutions:
   name_verbose: Electrical Meter
   name_old: ${name} # change for renameing a device
   # pins
-  helper_binary_pin: GPIO35
-  helper_adc_pin: GPIO32
-  id_control_led_pin: GPIO21
+  binary_pin: GPIO35
+  adc_pin: GPIO32
+  control_led_pin: GPIO21
   # secrets
   ota_pw: !secret ota_pw
   wifi_home_ssid: !secret wifi_home_ssid
