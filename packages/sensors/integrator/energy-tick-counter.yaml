@@ -69,7 +69,7 @@ globals:
   - id: ${global_energy_base_id}
     type: float
     restore_value: no
-    initial_value: 'nan'
+    initial_value: '0.0'
   - id: ${global_energy_multiplicator_id}
     type: float
     restore_value: no
