@@ -79,7 +79,7 @@ sensor:
   - name: ${name_verbose} Energy Total
     id: ${sensor_energy_id}
     platform: template
-    icon: mdi:home-lightning-bold
+    icon: mdi:home-lightning-bolt
     unit_of_measurement: kWh
     accuracy_decimals: 2
     lambda: return id(${global_ticks_id}) * id(${global_energy_multiplicator_id}) + id(${global_energy_base_id});
