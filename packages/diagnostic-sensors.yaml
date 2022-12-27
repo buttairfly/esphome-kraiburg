@@ -8,7 +8,7 @@ sensor:
     update_interval: 60s
     entity_category: diagnostic
   - platform: uptime
-    name: ${name_verbose} Sensor
+    name: ${name_verbose} Uptime
     update_interval: 60s
     entity_category: diagnostic
 
