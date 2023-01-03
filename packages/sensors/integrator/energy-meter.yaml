@@ -58,7 +58,7 @@ globals:
   - id: ${global_energy_multiplicator_id}
     type: float
     restore_value: yes
-    initial_value: '0.01333333333333333' # 1kWh / 75U
+    initial_value: '0.0133333333333333333333' # 1kWh / 75U
 
 sensor:
   - name: ${name_verbose} Energy
@@ -80,7 +80,16 @@ sensor:
     lambda: return id(${global_ticks_id});
     update_interval: 60s
     on_value:
-      - component.update: ${sensor_energy_id}
+      - if:
+          condition:
+            lambda: |-
+              'return isnan(id(${homeassistant_sensor_id_last}).state);'
+          then:
+            - logger.log:
+                format: No propagation of sensor ticks to energy total since no base value available
+                level: WARN
+          else:
+            - component.update: ${sensor_energy_id}
 
   - name: ${name_verbose} Multiplicator
     id: ${helper_multiplicator}
@@ -122,10 +131,9 @@ sensor:
     device_class: energy
     on_value:
       - logger.log:
-          format: 'homeassistant sensor.electrical_meter_energy_last available as %s: %.4fkWh'
+          format: 'homeassistant sensor.electrical_meter_energy_last available: %.4fkWh'
           level: INFO
           args: [
-            '${homeassistant_sensor_id_last}',
             'id(${homeassistant_sensor_id_last}).state'
           ]
 
@@ -166,7 +174,7 @@ binary_sensor:
   #         id: ${control_led_id}
   #     - component.update: ${sensor_ticks_id}
 
-# get last value of kWh from homeassistant
+# get last value of kWh from homeassistant as new base value
 esphome:
   on_boot:
     - priority: 200
@@ -174,12 +182,18 @@ esphome:
         - while:
             condition:
               lambda: |-
-                return isnan(id(${homeassistant_sensor_id_last}).state);
+                'return isnan(id(${homeassistant_sensor_id_last}).state);'
             then:
               - logger.log:
                   format: Boot - no homeassistant value found
-                  level: INFO
-              - delay: 100ms
+                  level: WARN
+              - delay: 500ms
+        - logger.log:
+            format: 'Boot - homeassistant value found: %.4fkWh'
+            level: INFO
+            args: [
+              'id(${homeassistant_sensor_id_last}).state'
+            ]
         - globals.set:
             id: ${global_energy_base_id}
             value: !lambda 'return id(${homeassistant_sensor_id_last}).state;'
