@@ -95,7 +95,7 @@ sensor:
     platform: template
     icon: mdi:numeric
     unit_of_measurement: 'kWh'
-    accuracy_decimals: 2
+    accuracy_decimals: 3
     entity_category: diagnostic
     lambda: return id(${global_energy_base_id});
     update_interval: 24h
@@ -115,7 +115,7 @@ sensor:
 
   - # get last kWh reading from homeassistant
     platform: homeassistant
-    entity_id: sensor.${homeassistant_sensor_id_last}
+    entity_id: sensor.electrical_meter_energy_last
     id: ${homeassistant_sensor_id_last}
     entity_category: diagnostic
     device_class: energy
@@ -146,7 +146,15 @@ esphome:
   on_boot:
     - priority: 200
       then:
+        - while:
+            condition:
+              lambda: |-
+                return isnan(id(${homeassistant_sensor_id_last}).state);
+            then:
+              - logger.log: "Boot - no homeassistant value found"
+              - delay: 100ms
         - globals.set:
             id: ${global_energy_base_id}
             value: !lambda 'return id(${homeassistant_sensor_id_last}).state;'
         - component.update: ${helper_base}
+        - component.update: ${sensor_energy_id}
