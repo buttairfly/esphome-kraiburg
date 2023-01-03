@@ -83,7 +83,7 @@ sensor:
       - if:
           condition:
             lambda: |-
-              'return isnan(id(${homeassistant_sensor_id_last}).state);'
+              return isnan(id(${homeassistant_sensor_id_last}).state);
           then:
             - logger.log:
                 format: No propagation of sensor ticks to energy total since no base value available
@@ -182,7 +182,7 @@ esphome:
         - while:
             condition:
               lambda: |-
-                'return isnan(id(${homeassistant_sensor_id_last}).state);'
+                return isnan(id(${homeassistant_sensor_id_last}).state);
             then:
               - logger.log:
                   format: Boot - no homeassistant value found
