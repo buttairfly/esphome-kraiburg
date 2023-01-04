@@ -115,32 +115,19 @@ sensor:
     lambda: return id(${global_energy_base_id});
     update_interval: 24h
 
-  # - name: ${name_verbose} ADC
-  #   id: ${helper_adc_id}
-  #   platform: adc
-  #   icon: mdi:waveform
-  #   pin: ${adc_pin}
-  #   update_interval: 10ms
-  #   raw: true
-  #   internal: true
+  # - # get last kWh reading from homeassistant
+  #   platform: homeassistant
+  #   entity_id: sensor.electrical_meter_energy_last
+  #   id: ${homeassistant_sensor_id_last}
   #   entity_category: diagnostic
-  #   unit_of_measurement: ''
-  #   filters:
-  #     - multiply: 0.00024420024 # 1/(2^12-1)
-
-  - # get last kWh reading from homeassistant
-    platform: homeassistant
-    entity_id: sensor.electrical_meter_energy_last
-    id: ${homeassistant_sensor_id_last}
-    entity_category: diagnostic
-    device_class: energy
-    on_value:
-      - logger.log:
-          format: 'homeassistant sensor.electrical_meter_energy_last available: %.4fkWh'
-          level: INFO
-          args: [
-            'id(${homeassistant_sensor_id_last}).state'
-          ]
+  #   device_class: energy
+  #   on_value:
+  #     - logger.log:
+  #         format: 'homeassistant sensor.electrical_meter_energy_last available: %.4fkWh'
+  #         level: INFO
+  #         args: [
+  #           'id(${homeassistant_sensor_id_last}).state'
+  #         ]
 
 binary_sensor:
   - name: ${name_verbose} Tick
@@ -159,48 +146,29 @@ binary_sensor:
       - light.toggle:
           id: ${control_led_id}
       - component.update: ${sensor_ticks_id}
-  # - name: ${name_verbose} Tick
-  #   id: ${helper_binary_id}
-  #   platform: analog_threshold
-  #   icon: mdi:square-wave
-  #   sensor_id: ${helper_adc_id}
-  #   threshold:
-  #     upper: 0.9999
-  #     lower: 0.7
-  #   # internal: true
-  #   entity_category: diagnostic
-  #   filters:
-  #     - delayed_on: 50ms
-  #   on_release:
-  #     - globals.set:
-  #         id: ${global_ticks_id}
-  #         value: !lambda 'return id(${global_ticks_id}) + 1;'
-  #     - light.toggle:
-  #         id: ${control_led_id}
-  #     - component.update: ${sensor_ticks_id}
 
-# get last value of kWh from homeassistant as new base value
-esphome:
-  on_boot:
-    - priority: 200
-      then:
-        - while:
-            condition:
-              lambda: |-
-                return isnan(id(${homeassistant_sensor_id_last}).state);
-            then:
-              - logger.log:
-                  format: Boot - no homeassistant value found
-                  level: WARN
-              - delay: 500ms
-        - logger.log:
-            format: 'Boot - homeassistant value found: %.4fkWh'
-            level: INFO
-            args: [
-              'id(${homeassistant_sensor_id_last}).state'
-            ]
-        - globals.set:
-            id: ${global_energy_base_id}
-            value: !lambda 'return id(${homeassistant_sensor_id_last}).state;'
-        - component.update: ${helper_base}
-        - component.update: ${sensor_energy_id}
+# # get last value of kWh from homeassistant as new base value
+# esphome:
+#   on_boot:
+#     - priority: 200
+#       then:
+#         - while:
+#             condition:
+#               lambda: |-
+#                 return isnan(id(${homeassistant_sensor_id_last}).state);
+#             then:
+#               - logger.log:
+#                   format: Boot - no homeassistant value found
+#                   level: WARN
+#               - delay: 500ms
+#         - logger.log:
+#             format: 'Boot - homeassistant value found: %.4fkWh'
+#             level: INFO
+#             args: [
+#               'id(${homeassistant_sensor_id_last}).state'
+#             ]
+#         - globals.set:
+#             id: ${global_energy_base_id}
+#             value: !lambda 'return id(${homeassistant_sensor_id_last}).state;'
+#         - component.update: ${helper_base}
+#         - component.update: ${sensor_energy_id}
