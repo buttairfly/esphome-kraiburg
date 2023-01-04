@@ -61,18 +61,32 @@ globals:
     initial_value: '0.0133333333333333333333' # 1kWh / 75U
 
 sensor:
-  - name: ${name_verbose} Energy
-    id: ${sensor_energy_id}
+  - name: ${name_verbose} Energy Total
+    id: ${sensor_energy_id}_absolute
     platform: template
-    icon: mdi:home-lightning-bolt
+    state_class: total
     device_class: energy
+    icon: mdi:home-lightning-bolt
     unit_of_measurement: kWh
     accuracy_decimals: 3
-    lambda: return id(${global_ticks_id}) * id(${global_energy_multiplicator_id}) + id(${global_energy_base_id});
+    lambda: return id(${sensor_energy_id}).state + id(${global_energy_base_id});
     update_interval: 60s
+  - name: ${name_verbose} Energy Relative
+    id: ${sensor_energy_id}
+    platform: template
+    state_class: total_increasing
+    device_class: energy
+    icon: mdi:home-lightning-bolt-outline
+    unit_of_measurement: kWh
+    accuracy_decimals: 3
+    lambda: return id(${global_ticks_id}) * id(${global_energy_multiplicator_id});
+    update_interval: 60s
+    on_value:
+      - component.update: ${sensor_energy_id}_absolute
   - name: ${name_verbose} Ticks
     id: ${sensor_ticks_id}
     platform: template
+    state_class: total_increasing
     icon: mdi:counter
     unit_of_measurement: ''
     accuracy_decimals: 0
@@ -80,16 +94,7 @@ sensor:
     lambda: return id(${global_ticks_id});
     update_interval: 60s
     on_value:
-      - if:
-          condition:
-            lambda: |-
-              return isnan(id(${homeassistant_sensor_id_last}).state);
-          then:
-            - logger.log:
-                format: No propagation of sensor ticks to energy total since no base value available
-                level: WARN
-          else:
-            - component.update: ${sensor_energy_id}
+      - component.update: ${sensor_energy_id}
 
   - name: ${name_verbose} Multiplicator
     id: ${helper_multiplicator}
