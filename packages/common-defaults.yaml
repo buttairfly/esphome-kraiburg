@@ -1,13 +1,12 @@
 substitutions:
   log_level: DEBUG
   flash_write_interval: 10min
+  # needed substitutions:
 
 logger:
   level: ${log_level}
 
 api:
-  # encryption:
-  #   key: !secret api_encryption_key
 
 preferences:
   flash_write_interval: ${flash_write_interval}
