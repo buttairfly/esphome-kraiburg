@@ -44,9 +44,17 @@ A: Set the following rule via file `/etc/udev/rules.d/m5stack-stamp-c3u.rules` w
 
 
 Q: pinout
+
 A: ![m5stack-stamp-c3u](./pinouts/pinout_m5stack-stamp-c3u.jpg)
 
 ### az-delivery esp32-devkitc-v4
 
 Q: pinout
+
 A: ![az-delivery esp32-devkitc-v4](./pinouts/pinout_az-delivery-esp32-devkitc-v4.png)
+
+### nodemcu-v2
+
+Q: pinout
+
+A: ![nodemcu-v2](./pinouts/pinout_nodemcu-v2-esp8266-full.jpg)
