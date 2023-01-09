@@ -1,0 +1,10 @@
+substitutions:
+  # needed substitutions:
+  # name:
+
+esphome:
+  name: ${name}
+  min_version: '2022.12'
+
+esp8266:
+  board: nodemcuv2

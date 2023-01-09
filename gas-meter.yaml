@@ -1,0 +1,22 @@
+substitutions:
+  name: gas-meter
+  id: gas_meter
+  name_verbose: Gas Meter
+  name_old: ${name} # change for renameing a device
+  # pins
+  binary_pin: D7
+  control_led_pin: D4
+  # secrets
+  ota_pw: !secret ota_pw
+  wifi_home_ssid: !secret wifi_home_ssid
+  wifi_home_pw: !secret wifi_home_pw
+  wifi_fallback_pw: !secret wifi_fallback_pw
+
+packages:
+  board: !include /config/boards/nodemcu-v2.yaml
+  git-version: !include /config/packages/git-version.yaml
+  wifi: !include /config/packages/wifi.yaml
+  common-defaults: !include /config/packages/common-defaults.yaml
+  diagnostic-sensors: !include /config/packages/diagnostic-sensors.yaml
+  # specific
+  gas-tick-counter: !include /config/packages/sensors/integrator/gas-meter.yaml
