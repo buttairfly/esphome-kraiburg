@@ -56,7 +56,7 @@ globals:
   - id: ${global_volume_multiplicator_id}
     type: float
     restore_value: yes
-    initial_value: '0.001' # 1m³ / 1000U
+    initial_value: '0.01' # 1m³ / 100U
 
 sensor:
   - name: ${name_verbose} Volume Total
@@ -66,7 +66,7 @@ sensor:
     device_class: energy
     icon: mdi:meter-gas
     unit_of_measurement: m³
-    accuracy_decimals: 3
+    accuracy_decimals: 2
     lambda: return id(${sensor_volume_id}).state + id(${global_volume_base_id});
     update_interval: 60s
   - name: ${name_verbose} Energy Relative
@@ -76,7 +76,7 @@ sensor:
     device_class: energy
     icon: mdi:meter-gas-outline
     unit_of_measurement: m³
-    accuracy_decimals: 3
+    accuracy_decimals: 2
     lambda: return id(${global_ticks_id}) * id(${global_volume_multiplicator_id});
     update_interval: 60s
     on_value:
