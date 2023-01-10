@@ -2,12 +2,12 @@ substitutions:
   control_led_id: ${id}_control_led
   # needed substitutions:
   # id:
-  # name:
+  # name_verbose:
   # control_led_pin:
 
 light:
   - platform: binary
-    name: ${name} Control Led
+    name: ${name_verbose} Control Led
     id: ${control_led_id}
     internal: true
     output: ${control_led_id}_output
