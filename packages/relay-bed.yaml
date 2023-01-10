@@ -1,24 +1,83 @@
 substitutions:
   # needed substitutions:
   # id:
+  # name_verbose:
+
+binary_sensor:
+  - # max' hardware button (physical)
+    name: ${name_verbose} Bed Button Max
+    id: ${id}_button_max
+    icon: mdi:toggle-switch
+    platform: gpio
+    pin:
+      number: GPIO20 # brown
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+    internal: true
+    filters:
+      - delayed_on_off: 20ms
+    on_multi_click:
+    - timing:
+        - ON for at most 0.7s
+        - OFF for at least 0.2s
+      then:
+        - # short clicked
+          switch.toggle: ${id}_bed_light
+    - timing:
+        - ON for at least 1s
+        - OFF for at least 0.2s
+      then:
+        - # long clicked
+          switch.toggle: ${id}_relay1
+  - # elas hardware button (physical)
+    name: ${name_verbose} Bed Button Ela
+    id: ${id}_button_ela
+    icon: mdi:toggle-switch
+    platform: gpio
+    pin:
+      number: GPIO21 # green
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+    internal: true
+    filters:
+      - delayed_on_off: 20ms
+    on_multi_click:
+    - timing:
+        - ON for at most 0.7s
+        - OFF for at least 0.2s
+      then:
+        - # short clicked
+          switch.toggle: ${id}_bed_light
+    - timing:
+        - ON for at least 1s
+        - OFF for at least 0.2s
+      then:
+        - # long clicked
+          switch.toggle: ${id}_relay2
 
 switch:
-  - platform: template
+  - # combined bed lights (logical)
     name: ${name_verbose} Bed Light
     id: ${id}_bed_light
     icon: mdi:bed-double
+    platform: template
     turn_on_action:
       - switch.turn_on: ${id}_relay1
       - switch.turn_on: ${id}_relay2
     turn_off_action:
       - switch.turn_off: ${id}_relay1
       - switch.turn_off: ${id}_relay2
-  - platform: gpio
+  - # max' bed side only (physical)
     name: ${name_verbose} Bed Light Max
     id: ${id}_relay1
     icon: mdi:bed-double-outline
+    platform: gpio
     pin:
-      number: GPIO3
+      number: GPIO3 # blue
       inverted: true
     restore_mode: ALWAYS_OFF
     device_class: switch
@@ -34,12 +93,13 @@ switch:
             switch.is_off: ${id}_relay2
           then:
             - lambda: id(${id}_bed_light).publish_state(false);
-  - platform: gpio
+  - # elas bed side only (physical)
     name: ${name_verbose} Bed Light Ela
     id: ${id}_relay2
     icon: mdi:bed-double-outline
+    platform: gpio
     pin:
-      number: GPIO4
+      number: GPIO4 # green
       inverted: true
     restore_mode: ALWAYS_OFF
     device_class: switch
@@ -56,23 +116,23 @@ switch:
           then:
             - lambda: id(${id}_bed_light).publish_state(false);
   - # currently unused relay
-    platform: gpio
     name: Relay3
     id: ${id}_relay3
     icon: mdi:electric-switch
+    platform: gpio
     pin:
-      number: GPIO1
+      number: GPIO1 # yellow
       inverted: true
     restore_mode: ALWAYS_OFF
     device_class: switch
     internal: true
   - # currently unused relay
-    platform: gpio
     name: Relay4
     id: ${id}_relay4
+    platform: gpio
     icon: mdi:electric-switch
     pin:
-      number: GPIO0
+      number: GPIO0 # grey
       inverted: true
     restore_mode: ALWAYS_OFF
     device_class: switch
