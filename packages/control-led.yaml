@@ -7,8 +7,9 @@ substitutions:
 
 light:
   - platform: binary
-    name: ${name}-control-led
+    name: ${name} Control Led
     id: ${control_led_id}
+    internal: true
     output: ${control_led_id}_output
     entity_category: diagnostic
 
