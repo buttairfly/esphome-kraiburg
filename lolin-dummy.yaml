@@ -1,0 +1,38 @@
+substitutions:
+  name: dummy
+  id: dummy
+  name_verbose: dummy
+  name_old: ${name} # change for renameing a device
+  # secrets
+  ota_pw: !secret ota_pw
+  wifi_home_ssid: !secret wifi_home_ssid
+  wifi_home_pw: !secret wifi_home_pw
+  wifi_fallback_pw: !secret wifi_fallback_pw
+
+packages:
+  board: !include /config/boards/lolin-nodemcu-v3.yaml
+  git-version: !include /config/packages/git-version.yaml
+  wifi: !include /config/packages/wifi.yaml
+  common-defaults: !include /config/packages/common-defaults.yaml
+  diagnostic-sensors: !include /config/packages/diagnostic-sensors.yaml
+
+# dummy blink led
+switch:
+  - platform: gpio
+    pin: D4 # WLAN led
+    id: dummy_led
+  - platform: template
+    name: "Red LED"
+    optimistic: yes
+    id: redtemp
+    turn_on_action:
+    - while:
+        condition:
+          lambda: 'return true;'
+        then:
+        - switch.turn_on: dummy_led
+        - delay: 500ms
+        - switch.turn_off: dummy_led
+        - delay: 500ms
+    turn_off_action:
+    - switch.turn_off: dummy_led

@@ -1,0 +1,15 @@
+substitutions:
+  # needed substitutions:
+  # name:
+
+esphome:
+  name: ${name}
+  min_version: '2022.12'
+  platformio_options:
+    upload_speed: 9600
+    monitor_speed: 9600
+    test_speed: 9600
+    debug_speed: 9600
+
+esp8266:
+  board: nodemcuv2
