@@ -3,63 +3,61 @@ substitutions:
   # id:
   # name_verbose:
 
-binary_sensor:
-  - # max' hardware button (physical)
-    name: ${name_verbose} Bed Button Max
-    id: ${id}_button_max
-    icon: mdi:toggle-switch
-    platform: gpio
-    pin:
-      number: GPIO20 # brown
-      inverted: true
-      mode:
-        input: true
-        pullup: true
-    # internal: true
-    entity_category: diagnostic
-    filters:
-      - delayed_on_off: 50ms
-    on_multi_click:
-    - timing:
-        - ON for at most 1s
-        - OFF for at least 60ms
-      then:
-        - logger.log: bed button Max short clicked
-        - switch.toggle: ${id}_bed_light
-    - timing:
-        - ON for at least 1s
-        - OFF for at least 60ms
-      then:
-        - logger.log: bed button Max long clicked
-        - switch.toggle: ${id}_relay1
-  - # elas hardware button (physical)
-    name: ${name_verbose} Bed Button Ela
-    id: ${id}_button_ela
-    icon: mdi:toggle-switch
-    platform: gpio
-    pin:
-      number: GPIO21 # green
-      inverted: true
-      mode:
-        input: true
-        pullup: true
-    # internal: true
-    entity_category: diagnostic
-    filters:
-      - delayed_on_off: 50ms
-    on_multi_click:
-    - timing:
-        - ON for at most 1s
-        - OFF for at least 60ms
-      then:
-        - logger.log: bed button Ela short clicked
-        - switch.toggle: ${id}_bed_light
-    - timing:
-        - ON for at least 1s
-        - OFF for at least 60ms
-      then:
-        - logger.log: bed button Ela long clicked
-        - switch.toggle: ${id}_relay2
+# binary_sensor:
+#   - # max' hardware button (physical)
+#     name: ${name_verbose} Bed Button Max
+#     id: ${id}_button_max
+#     icon: mdi:toggle-switch
+#     platform: gpio
+#     pin:
+#       number: GPIO20 # brown
+#       inverted: true
+#       mode:
+#         input: true
+#         pullup: true
+#     entity_category: diagnostic
+#     filters:
+#       - delayed_on_off: 50ms
+#     on_multi_click:
+#     - timing:
+#         - ON for at most 1s
+#         - OFF for at least 60ms
+#       then:
+#         - logger.log: bed button Max short clicked
+#         - switch.toggle: ${id}_bed_light
+#     - timing:
+#         - ON for at least 1s
+#         - OFF for at least 60ms
+#       then:
+#         - logger.log: bed button Max long clicked
+#         - switch.toggle: ${id}_relay1
+#   - # elas hardware button (physical)
+#     name: ${name_verbose} Bed Button Ela
+#     id: ${id}_button_ela
+#     icon: mdi:toggle-switch
+#     platform: gpio
+#     pin:
+#       number: GPIO21 # green
+#       inverted: true
+#       mode:
+#         input: true
+#         pullup: true
+#     entity_category: diagnostic
+#     filters:
+#       - delayed_on_off: 50ms
+#     on_multi_click:
+#     - timing:
+#         - ON for at most 1s
+#         - OFF for at least 60ms
+#       then:
+#         - logger.log: bed button Ela short clicked
+#         - switch.toggle: ${id}_bed_light
+#     - timing:
+#         - ON for at least 1s
+#         - OFF for at least 60ms
+#       then:
+#         - logger.log: bed button Ela long clicked
+#         - switch.toggle: ${id}_relay2
 
 switch:
   - # combined bed lights (logical)
