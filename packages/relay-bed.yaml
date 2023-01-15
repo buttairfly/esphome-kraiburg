@@ -15,7 +15,8 @@ binary_sensor:
       mode:
         input: true
         pullup: true
-    internal: true
+    # internal: true
+    entity_category: diagnostic
     filters:
       - delayed_on_off: 50ms
     on_multi_click:
@@ -42,7 +43,8 @@ binary_sensor:
       mode:
         input: true
         pullup: true
-    internal: true
+    # internal: true
+    entity_category: diagnostic
     filters:
       - delayed_on_off: 50ms
     on_multi_click:
