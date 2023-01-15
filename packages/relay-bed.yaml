@@ -17,20 +17,20 @@ binary_sensor:
         pullup: true
     internal: true
     filters:
-      - delayed_on_off: 20ms
+      - delayed_on_off: 50ms
     on_multi_click:
     - timing:
-        - ON for at most 0.7s
-        - OFF for at least 0.2s
+        - ON for at most 1s
+        - OFF for at least 60ms
       then:
-        - # short clicked
-          switch.toggle: ${id}_bed_light
+        - logger.log: bed button Max short clicked
+        - switch.toggle: ${id}_bed_light
     - timing:
         - ON for at least 1s
-        - OFF for at least 0.2s
+        - OFF for at least 60ms
       then:
-        - # long clicked
-          switch.toggle: ${id}_relay1
+        - logger.log: bed button Max long clicked
+        - switch.toggle: ${id}_relay1
   - # elas hardware button (physical)
     name: ${name_verbose} Bed Button Ela
     id: ${id}_button_ela
@@ -44,20 +44,20 @@ binary_sensor:
         pullup: true
     internal: true
     filters:
-      - delayed_on_off: 20ms
+      - delayed_on_off: 50ms
     on_multi_click:
     - timing:
-        - ON for at most 0.7s
-        - OFF for at least 0.2s
+        - ON for at most 1s
+        - OFF for at least 60ms
       then:
-        - # short clicked
-          switch.toggle: ${id}_bed_light
+        - logger.log: bed button Ela short clicked
+        - switch.toggle: ${id}_bed_light
     - timing:
         - ON for at least 1s
-        - OFF for at least 0.2s
+        - OFF for at least 60ms
       then:
-        - # long clicked
-          switch.toggle: ${id}_relay2
+        - logger.log: bed button Ela long clicked
+        - switch.toggle: ${id}_relay2
 
 switch:
   - # combined bed lights (logical)
