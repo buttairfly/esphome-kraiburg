@@ -21,7 +21,7 @@ binary_sensor:
     on_multi_click:
     - timing:
         - ON for at most 500ms
-        - OFF for at least 60ms
+        - OFF for 60ms to 500ms
         - ON for at most 500ms
         - OFF for at least 60ms
       then:
@@ -29,7 +29,7 @@ binary_sensor:
         - switch.toggle: ${id}_bed_light
     - timing:
         - ON for at least 1s
-        - OFF for at least 60ms
+        - OFF for 60ms to 1s
         - ON for at least 1s
         - OFF for at least 60ms
       then:
@@ -52,7 +52,7 @@ binary_sensor:
     on_multi_click:
     - timing:
         - ON for at most 500ms
-        - OFF for at least 60ms
+        - OFF for 60ms to 500ms
         - ON for at most 500ms
         - OFF for at least 60ms
       then:
@@ -60,7 +60,7 @@ binary_sensor:
         - switch.toggle: ${id}_bed_light
     - timing:
         - ON for at least 1s
-        - OFF for at least 60ms
+        - OFF for 60ms to 1s
         - ON for at least 1s
         - OFF for at least 60ms
       then:
