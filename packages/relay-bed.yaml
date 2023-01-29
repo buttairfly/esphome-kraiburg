@@ -28,9 +28,9 @@ binary_sensor:
         - logger.log: bed button Max short double-clicked
         - switch.toggle: ${id}_bed_light
     - timing:
-        - ON for at least 1s
+        - ON for 1s to 3s
         - OFF for 60ms to 1s
-        - ON for at least 1s
+        - ON for 1s to 3s
         - OFF for at least 60ms
       then:
         - logger.log: bed button Max long double-clicked
@@ -59,9 +59,9 @@ binary_sensor:
         - logger.log: bed button Ela short double-clicked
         - switch.toggle: ${id}_bed_light
     - timing:
-        - ON for at least 1s
+        - ON for 1s to 3s
         - OFF for 60ms to 1s
-        - ON for at least 1s
+        - ON for 1s to 3s
         - OFF for at least 60ms
       then:
         - logger.log: bed button Ela long double-clicked
