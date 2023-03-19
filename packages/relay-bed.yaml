@@ -41,7 +41,7 @@ binary_sensor:
     icon: mdi:toggle-switch
     platform: gpio
     pin:
-      number: GPIO21 # green
+      number: GPIO9 # green
       inverted: true
       mode:
         input: true
